@@ -14,7 +14,7 @@
 # remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "air" # "myskin" # "default"  "air", "aqua", "contrast", , "dirt", "neon", "mint", "plum", "sunrise"
 
-# Site Settings
+# Site Settings 
 locale                   : "ko-KR" # 블로그 사용 언어
 title                    : "HERKSS Git Blog" # 블로그 타이틀
 title_separator          : "-"

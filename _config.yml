@@ -16,12 +16,12 @@ minimal_mistakes_skin    : "myskin" # "default"  "air", "aqua", "contrast", , "d
 
 # Site Settings
 locale                   : "ko-KR" # 블로그 사용 언어
-title                    : "블로그 타이틀" # 블로그 타이틀
+title                    : "HERKSS Git Blog" # 블로그 타이틀
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "블로그 유저 닉네임"
-description              : "블로그 간단 설명"
-url                      : "https://유저이름.github.io"
+name                     : "HERKSS"
+description              : "헉스의 블로그"
+url                      : "https://herkss.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "유저이름/comments" #댓글 경로 / github name/repository
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"

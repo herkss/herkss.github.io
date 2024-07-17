@@ -16,6 +16,18 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "firstJob" %}
+                        <li><a href="/categories/blog" class="">First Job({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+
+
+
       </li>
       <li>	
             <br>      

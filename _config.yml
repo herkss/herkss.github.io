@@ -12,7 +12,7 @@
 
 # theme                  : "minimal-mistakes-jekyll"   
 # remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "neon" # "myskin" # "default"  "air", "aqua", "contrast", , "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "contrast" # "myskin" # "default"  "air", "aqua", "contrast", , "dirt", "neon", "mint", "plum", "sunrise"
 
 locale                   : "ko-KR" # 블로그 사용 언어
 title                    : "HERKSS Git Blog" # 블로그 타이틀

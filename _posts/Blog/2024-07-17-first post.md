@@ -1,9 +1,9 @@
 ---
-title:  "First Posting" 
-excerpt: "herkss 첫 게시물 예시"
+title:  "First JOB" 
+excerpt: "herkss fisrtJob"
 
 categories:
-  - Blog
+  - firstJob
 tags:
   - [Blog, Git, Github,]
 
@@ -20,7 +20,7 @@ last_modified_at: 2024-07-17
 a = 1
 ```
 
-## 위 형식을 참고하여 블로그를 커스텀하시오
+## Fist Job page
 
 `-` 게시물 업로드 양식
 

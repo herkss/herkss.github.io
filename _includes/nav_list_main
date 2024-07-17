@@ -7,6 +7,8 @@
       <li>
             📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">{{sum}}</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
       </li>
+
+
       <li>
         <span class="nav__sub-title">etc</span>
             <ul>
@@ -25,6 +27,30 @@
                 {% endfor %}
             </ul>
 
+
+
+      <li>
+        <span class="nav__sub-title">etc2</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Blog2" %}
+                        <li><a href="/categories/blog" class="">Blog Dev2({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "firstJob2" %}
+                        <li><a href="/categories/blog" class="">First Job2({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+
+
+
+      </li>
 
 
 

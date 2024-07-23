@@ -1,5 +1,5 @@
 ---
-title:  "Dismissible 사용법" 
+title:  "Dismissible 사용법(스와이프)" 
 excerpt: "스와이프적용"
 
 categories:

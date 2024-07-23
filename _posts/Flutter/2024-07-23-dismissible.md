@@ -21,7 +21,7 @@ List에서 특정 아이템을 좌,우로 움직였을 때, 특정 action을 취
 
 
 
-# Properties and Methods
+#@ Properties and Methods
 
 - background
 child 아래에 있어서 child widget을 드래그해야 보이는 widget
@@ -41,11 +41,11 @@ child가 화면에서 사라지고 난 후에 호출
 - confirmDismiss
 dismiss가 동작하기 전에 유저에게 확인할 기회를 준다.
 
-```dart
-Example
-Items
+
+
 먼저 list generate function을 이용해서 30개의 list 아이템을 생성합니다.
 
+```dart
 final List<String> _items = List.generate(30, (index) => 'Item ${index + 1}');
 ListView.builder()
 listView.builder를 이용해서 위에서 만든 item list를 렌더링합니다.
@@ -69,11 +69,12 @@ ListView.builder(
 
 ```
 
-```dart
+
 Dismissible
 이제 Dismissble 기능을 사용하기 위해서 Card 부분에 Dismissible을 적용해줍니다.
 Dismissible에서 꼭 필요한 것은 key와 child입니다.
 
+```dart
 Dismissible(
           key: Key(_items[index]),
           child: Card(
@@ -94,6 +95,7 @@ Dismissible(
 ```
 Background and SecondaryBackground
 좌측으로 드래하냐 우측으로 드래그하냐에 따라 다른 화면을 보여주기 위해서 background와 secondaryBackground를 적용해보겠습니다.
+
 ```dart
 Dismissible(
           key: Key(_items[index]),
@@ -135,6 +137,7 @@ Dismissible(
         )
 
 ```
+
 onDismissed
 onDismissed를 이용해서 드래그 이후의 동작을 구현합니다.
 

@@ -2,11 +2,7 @@
 main:
   - title: "Home"
     url: /index.html
-  - title: "Flutter"
-    url: /flutter/
-  - title: "Second"
-    url: /second/
-  - title: "Category"
+   - title: "Category"
     url: /categories/
   - title: "About"
     url: /about/

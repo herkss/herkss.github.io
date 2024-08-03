@@ -10,19 +10,19 @@
 
 
       <li>
-        <span class="nav__sub-title">etc</span>
+        <span class="nav__sub-title">플러터(FLUTTER & DART)</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Blog" %}
-                        <li><a href="/categories/blog" class="">Blog Dev({{category[1].size}})</a></li>
+                    {% if category[0] == "Flutter" %}
+                        <li><a href="/categories/flutter" class="">Flutter({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
 
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "firstJob" %}
-                        <li><a href="/categories/blog" class="">First Job({{category[1].size}})</a></li>
+                    {% if category[0] == "Dart" %}
+                        <li><a href="/categories/flutter" class="">Dart({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -30,19 +30,19 @@
 
 
       <li>
-        <span class="nav__sub-title">etc2</span>
+        <span class="nav__sub-title">Herkss's Job</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Blog2" %}
-                        <li><a href="/categories/blog" class="">Blog Dev2({{category[1].size}})</a></li>
+                    {% if category[0] == "Job" %}
+                        <li><a href="/categories/job" class="">delivery({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
 
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "firstJob2" %}
-                        <li><a href="/categories/blog" class="">First Job2({{category[1].size}})</a></li>
+                    {% if category[0] == "windows" %}
+                        <li><a href="/categories/job" class="">Windows Cleaner({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

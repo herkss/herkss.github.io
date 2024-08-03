@@ -55,19 +55,19 @@
 
 
      <li>
-      <span class="nav__sub-title">Herkss's Job</span>
+      <span class="nav__sub-title">ㅖersonal</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Job" %}
-                        <li><a href="/categories/job" class="">delivery({{category[1].size}})</a></li>
+                    {% if category[0] == "personal" %}
+                        <li><a href="/categories/Personal" class="">Personal({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
 
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "windows" %}
-                        <li><a href="/categories/job" class="">Windows Cleaner({{category[1].size}})</a></li>
+                    {% if category[0] == "Vlog" %}
+                        <li><a href="/categories/vlog" class="">VLog({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

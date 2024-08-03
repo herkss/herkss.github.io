@@ -3,7 +3,7 @@ title:  "First JOB"
 excerpt: "herkss fisrtJob"
 
 categories:
-  - firstJob
+  - job
 tags:
   - [Blog, Git, Github,]
 

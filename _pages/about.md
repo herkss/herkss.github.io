@@ -5,9 +5,9 @@ layout: single
 published: true
 date: 2021-09-25
 categories:
-  - About    
+  - Blog       
 tags:
-  - about
+  - blog
 ---
 
 

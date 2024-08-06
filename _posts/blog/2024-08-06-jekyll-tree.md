@@ -1,11 +1,25 @@
-Github 블로그] Minimal-Mistakes 테마의 디렉터리 구조
- Date: 2020.05.26    Updated: 2020.05.30
- 카테고리: Blog
+---
+title:  "Jekyll-tree" 
+excerpt: "지킬의 폴더구조"
 
- 태그: jekyll minimal-mistake Blog
+categories:
+  - Blog
+tags:
+  - [Blog, Git, jekyll,]
 
- 목차
+toc: true
+toc_sticky: true
+ 
+date: 2024-08-06
+last_modified_at: 2024-08-06
+
+---
+
+
+
+ ### 목차
 minimal-mistakes 구조 한 눈에 보기
+
 📁_data 폴더
 구조
 📘navigation.yml

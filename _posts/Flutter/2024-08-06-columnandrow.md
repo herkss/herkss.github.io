@@ -17,7 +17,7 @@ last_modified_at: 2024-08-06
 
 ![Column and Row](/assets/images/comn-row.png)
 [Picture 1]
-![Column and Row](/assets/imagesclm-row2.png)
+![Column and Row](/assets/images/clm-row2.png)
 [Picture 2]
 ![Column and Row](/assets/images/clm-row3.png)
 [Picture 3]

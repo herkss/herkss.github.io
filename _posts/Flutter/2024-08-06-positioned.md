@@ -1,4 +1,3 @@
-
 ---
 title:  "Positioned" 
 excerpt: "Positioned"

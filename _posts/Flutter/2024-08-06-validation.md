@@ -1,6 +1,6 @@
 ---
 title:  "Validation 유효성검사" 
-excerpt: "유효성검사 Validation
+excerpt: "유효성검사 Validation"
 
 categories:
   - Flutter

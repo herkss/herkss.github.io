@@ -1,3 +1,21 @@
+
+---
+title:  "Positioned" 
+excerpt: "Positioned"
+
+categories:
+  - Flutter
+tags:
+  - [Positioned, 플러터, 포지션드,]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-08-06
+last_modified_at: 2024-08-06
+
+---
+
 `Positioned` 위젯은 Flutter의 `Stack` 위젯 내에서 자식 위젯의 위치를 절대적으로 지정할 수 있게 해줍니다. `Stack`은 여러 위젯을 쌓아서 배치할 수 있는 위젯으로, `Positioned` 위젯을 사용하면 `Stack` 내에서 자식 위젯의 정확한 위치를 설정할 수 있습니다.
 
 ### 1. 기본 구조

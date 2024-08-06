@@ -1,3 +1,21 @@
+---
+title:  "Column And Row" 
+excerpt: "Column And Row"
+
+categories:
+  - Flutter
+tags:
+  - [Column And Row, 플러터, Github, ]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-08-06
+last_modified_at: 2024-08-06
+
+---
+
+
 플러터에서 `Column`과 `Row` 위젯은 레이아웃을 구성하는 데 매우 중요한 역할을 합니다. 이 두 위젯은 자식 위젯들을 수직 또는 수평으로 배치할 수 있게 해줍니다. 각각의 특성과 사용 방법에 대해 자세히 설명하겠습니다.
 
 ### Column 위젯

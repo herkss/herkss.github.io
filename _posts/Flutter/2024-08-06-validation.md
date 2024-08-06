@@ -1,4 +1,3 @@
-
 ---
 title:  "Validation 유효성검사" 
 excerpt: "유효성검사 Validation

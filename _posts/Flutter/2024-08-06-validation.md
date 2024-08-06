@@ -1,5 +1,20 @@
 
+---
+title:  "Validation 유효성검사" 
+excerpt: "유효성검사 Validation
 
+categories:
+  - Flutter
+tags:
+  - [validation, validator, flutter, widget,]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-08-06
+last_modified_at: 2024-08-06
+
+---
 
 Flutter에서 폼 유효성 검사는 사용자 입력을 검증하고 올바른 데이터만 서버로 전송되도록 하는 중요한 기능입니다. Flutter에서 폼 유효성 검사를 구현하려면 `Form`, `TextFormField`, 및 `Validator`를 사용합니다.
 

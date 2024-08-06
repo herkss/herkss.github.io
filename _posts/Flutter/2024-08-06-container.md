@@ -5,7 +5,7 @@ excerpt: "Container-컨테이너"
 categories:
   - Flutter
 tags:
-  - [Container, 플러터, 컨테이너, ]
+  - [Container, 플러터, 컨테이너,]
 
 toc: true
 toc_sticky: true

@@ -1,3 +1,22 @@
+---
+title:  "TextFormField" 
+excerpt: "TextFormField-텍스트폼필드"
+
+categories:
+  - Flutter
+tags:
+  - [TextFormField, 플러터, 텍스트폼필드, ]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-08-06
+last_modified_at: 2024-08-06
+
+---
+
+
+
 `TextFormField`는 Flutter에서 사용자 입력을 처리하기 위해 사용하는 위젯입니다. `TextFormField`는 `TextField`의 확장으로, 폼의 일부로 사용되며 `Form` 위젯과 함께 사용할 때 유용합니다. `TextFormField`는 데이터 유효성 검사, 입력 형식 지정, 사용자 입력에 대한 피드백 제공 등의 기능을 지원합니다.
 
 ### 주요 속성

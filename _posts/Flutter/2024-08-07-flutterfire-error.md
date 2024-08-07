@@ -15,7 +15,7 @@ last_modified_at: 2024-08-06
 
 ---
 
-![flutterfire error]('assets/images/flutterfireerror.png')
+![Column and Row](/assets/images/flutterfireerror.png)
 
 lutterfire configure --project=~~
 

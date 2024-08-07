@@ -12,7 +12,7 @@ toc_sticky: true
  
 date: 2024-08-06
 last_modified_at: 2024-08-06
-
+comments: true
 ---
 Flutter의 `BoxDecoration` 클래스는 위젯의 시각적 디자인을 꾸미는 데 사용됩니다. 주로 `Container` 위젯의 `decoration` 속성에 활용되며, 다양한 시각적 속성을 설정할 수 있습니다. `BoxDecoration`은 배경색, 테두리, 그림자, 모서리 둥글기 등 여러 스타일 속성을 지원합니다.
 

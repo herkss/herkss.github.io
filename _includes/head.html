@@ -34,3 +34,24 @@
     <script src="{{ script | relative_url }}"></script>
   {% endfor %}
 {% endif %}
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var clipboard = new ClipboardJS('.copy-button');
+
+        clipboard.on('success', function(e) {
+            console.log('복사 성공:', e);
+            e.clearSelection();
+        });
+
+        clipboard.on('error', function(e) {
+            console.error('복사 실패:', e);
+        });
+    });
+</script>

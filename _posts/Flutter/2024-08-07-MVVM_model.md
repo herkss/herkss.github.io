@@ -81,3 +81,98 @@ class UserView extends StatelessWidget {
 
 이러한 방식으로 MVVM 패턴을 사용하면 코드의 가독성과 유지보수성을 높일 수 있습니다. 추가적인 질문이나 구체적인 부분에 대해 더 알고 싶으신가요? 
 
+
+## 예제
+
+GetX에서 MVVM 패턴을 사용하는 예제를 소개하겠습니다.
+
+### 1. 모델 (Model)
+
+먼저, 모델 클래스를 정의합니다. 예를 들어, 사용자 정보를 저장하는 간단한 모델을 만들어 보겠습니다.
+
+```dart
+class User {
+  String name;
+  int age;
+
+  User({required this.name, required this.age});
+}
+```
+
+### 2. 뷰모델 (ViewModel)
+
+다음으로, 뷰모델을 정의합니다. GetX의 `GetxController`를 상속받아 상태를 관리합니다.
+
+```dart
+import 'package:get/get.dart';
+
+class UserController extends GetxController {
+  var user = User(name: '', age: 0).obs;
+
+  void updateUser(String name, int age) {
+    user.update((val) {
+      val?.name = name;
+      val?.age = age;
+    });
+  }
+}
+```
+
+### 3. 뷰 (View)
+
+이제 뷰를 만듭니다. GetX의 `Obx` 위젯을 사용하여 상태 변화를 감지하고 UI를 업데이트합니다.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class UserView extends StatelessWidget {
+  final UserController userController = Get.put(UserController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('MVVM with GetX')),
+      body: Column(
+        children: [
+          Obx(() => Text('Name: ${userController.user.value.name}')),
+          Obx(() => Text('Age: ${userController.user.value.age}')),
+          TextField(
+            onChanged: (value) {
+              userController.updateUser(value, userController.user.value.age);
+            },
+            decoration: InputDecoration(labelText: 'Enter Name'),
+          ),
+          TextField(
+            onChanged: (value) {
+              userController.updateUser(userController.user.value.name, int.parse(value));
+            },
+            decoration: InputDecoration(labelText: 'Enter Age'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+### 4. 메인 (Main)
+
+마지막으로, 메인 함수를 정의하여 앱을 실행합니다.
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(home: UserView()));
+}
+```
+
+### 설명
+
+- **모델**: 사용자 정보를 저장하는 간단한 클래스입니다.
+- **뷰모델**: `UserController`에서 모델의 데이터를 관리하고, 업데이트하는 메서드를 제공합니다.
+- **뷰**: `UserView`에서 사용자의 입력을 받고, 상태 변화를 감지하여 UI를 업데이트합니다.
+
+이렇게 GetX에서 MVVM 패턴을 적용하여 상태 관리를 효율적으로 할 수 있습니다. 추가적인 질문이 있으면 말씀해 주세요! 
+

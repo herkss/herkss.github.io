@@ -34,3 +34,14 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
 {% endif %}
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+<script>
+  new ClipboardJS('.btn--copy-code', {
+    target: function(trigger) {
+      return document.querySelector(trigger.getAttribute('data-clipboard-target'));
+    }
+  });
+</script>

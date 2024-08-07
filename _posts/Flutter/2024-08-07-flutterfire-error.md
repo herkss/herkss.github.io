@@ -1,3 +1,22 @@
+---
+title:  "Flutterfire Error" 
+excerpt: "Flutterfire error"
+
+categories:
+  - Flutter
+tags:
+  - [flutterfire, firebase, error,]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-08-06
+last_modified_at: 2024-08-06
+
+---
+
+
+
 lutterfire configure --project=~~
 
 명령어를 입력할 때 flutterfire의 환경변수가 제대로 추가되어 있지 않으면 zsh(현재 shell) 가 제대로 찾지 못하기 때문이다.

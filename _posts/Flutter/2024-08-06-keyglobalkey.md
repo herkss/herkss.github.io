@@ -12,7 +12,7 @@ toc_sticky: true
  
 date: 2024-08-06
 last_modified_at: 2024-08-06
-
+comments: true
 ---
 
 Dart와 Flutter에서 `Key`와 `GlobalKey`는 위젯의 식별과 상태 관리를 위해 중요한 역할을 합니다. 이들은 특히 복잡한 위젯 트리와 상태를 관리할 때 유용합니다. 아래에서 `Key`와 `GlobalKey`의 사용법과 중요성을 매우 상세하게 설명하겠습니다.

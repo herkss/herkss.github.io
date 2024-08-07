@@ -95,3 +95,23 @@
     font-size: $type-size-7;
   }
 }
+
+
+
+.btn--copy-code {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 75%;
+  background-color: mix(#fff, $text-color, 90%);
+  border-color: mix(#fff, $text-color, 90%);
+  color: $text-color;
+
+  &:hover {
+    background-color: mix(#fff, $text-color, 80%);
+    border-color: mix(#fff, $text-color, 80%);
+    color: $text-color;
+  }
+}

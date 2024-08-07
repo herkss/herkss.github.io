@@ -12,7 +12,7 @@ toc_sticky: true
  
 date: 2024-08-06
 last_modified_at: 2024-08-06
-
+comments: true
 ---
 
 Flutter에서 `Container` 위젯은 매우 유용한 레이아웃 도구입니다. 기본적으로 `Container`는 자식 위젯을 담는 박스 역할을 하며, 다양한 스타일링과 레이아웃 기능을 제공합니다. 아래에서 `Container`의 주요 속성과 그 사용법을 자세히 설명하겠습니다.

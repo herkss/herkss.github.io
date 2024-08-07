@@ -12,7 +12,7 @@ toc_sticky: true
  
 date: 2024-08-07
 last_modified_at: 2024-08-07
-
+comments: true
 ---
 플러터에서 MVVM(Model-View-ViewModel) 모델은 애플리케이션 구조를 관리하는 데 유용한 패턴입니다. MVVM은 UI와 비즈니스 로직을 분리하여 코드의 유지보수성과 테스트 용이성을 높입니다. 각 구성 요소의 역할은 다음과 같습니다.
 

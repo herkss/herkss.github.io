@@ -2,7 +2,7 @@
 title:  "[Git] .gitignore 파일 만들기" 
 
 categories:
-  - Git
+  - Flutter
 tags:
   - [Git, Github]
 

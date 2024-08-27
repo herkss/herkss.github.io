@@ -1,3 +1,18 @@
+---
+title:  "[Flutter] 플러터의 장점과 역사 등.." 
+
+categories:
+  - Flutter
+tags:
+  - [Flutter, 플러터, 역사, 장점]
+
+toc: true
+toc_sticky: true
+
+date: 2024-08-10
+last_modified_at: 2024-08-26
+comments: true
+---
 
 
 ### 크로스플랫폼 기술의 종류

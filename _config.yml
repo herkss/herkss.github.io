@@ -93,7 +93,7 @@ analytics:
 
 # Site Author
 author:
-  name  : "HERKSS GITHUB BLOG"
+      name: "HERKSS GITHUB BLOG"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:herks82@gmail.com"
     - label: "GitHub"

@@ -6,22 +6,22 @@
    Typography
    ========================================================================== */
 
-$doc-font-size: 16 !default;
+$doc-font-size: 15 !default;
 
 /* paragraph indention */
 $paragraph-indent: false !default; // true, false (default)
 $indent-var: 1.3em !default;
 
 /* system typefaces */
-$serif:"Nanum Gothic", "Coming Soon", Georgia, Times, serif !default;
-$sans-serif:"Nanum Gothic", "Iropke Batang", -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
+$serif:"Jua","Nanum Gothic", "Coming Soon", Georgia, Times, serif !default;
+$sans-serif:"Jua","Nanum Gothic", "Iropke Batang", -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
   "Helvetica Neue", "Lucida Grande", Arial, sans-serif !default;
-$monospace: "Nanum Gothic", "Nanum Gothic Coding", Monaco, Consolas, "Lucida Console", monospace !default;
-$cute:"Nanum Gothic", "Cafe24Oneprettynight" !default;
+$monospace:"Jua", "Nanum Gothic", "Nanum Gothic Coding", Monaco, Consolas, "Lucida Console", monospace !default;
+$cute:"Jua","Nanum Gothic", "Cafe24Oneprettynight" !default;
 
 /* sans serif typefaces */
 $sans-serif-narrow: $sans-serif !default;
-$helvetica:"Nanum Gothic", "Cafe24Oneprettynight", Helvetica, "Helvetica Neue", Arial, sans-serif !default;
+$helvetica:"Jua","Nanum Gothic", "Cafe24Oneprettynight", Helvetica, "Helvetica Neue", Arial, sans-serif !default;
 
 /* serif typefaces */
 $georgia: Georgia, serif !default;

@@ -3,7 +3,7 @@ title:  "Positioned"
 excerpt: "Positioned"
 
 categories:
-  - Flutter
+  - Widget
 tags:
   - [Positioned, 플러터, 포지션드,]
 

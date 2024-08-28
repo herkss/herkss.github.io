@@ -1,5 +1,5 @@
 ---
-title: "FLUTTER"
+title: "Flutter"
 layout: archive
 permalink: categories/flutter
 author_profile: true

@@ -5,5 +5,5 @@
 
 ![herkss face](https://herkss.github.io/assets/images/1103.jpg)
 <p align="center">
-<img src="https://herkss.github.io/assets/images/1103.jpg", height="100x", width="100px">
+<img src="https://herkss.github.io/assets/images/1103.jpg", height="50px", width="50px">
 </p>

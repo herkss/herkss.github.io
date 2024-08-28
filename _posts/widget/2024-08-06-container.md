@@ -3,7 +3,7 @@ title:  "Container-컨테이너"
 excerpt: "Container-컨테이너"
 
 categories:
-  - Flutter
+  - Widget
 tags:
   - [Container, 플러터, 컨테이너,]
 

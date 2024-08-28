@@ -5,5 +5,5 @@
 
 
 
-![herks](https://herkss.github.io/assets/images/1103.jpg){: width="100%" height="100%"}
+![herks](https://herkss.github.io/assets/images/1103.jpg){: width="50%" height="50%"}
   

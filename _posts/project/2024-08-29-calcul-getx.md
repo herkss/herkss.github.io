@@ -5,7 +5,7 @@ excerpt: "간단한 계산기앱"
 categories:
   - Project
 tags:
-  - [계산기, 플러터, Github,  calculator,]
+  - [계산기, 플러터, Github, Calculator,]
 
 toc: true
 toc_sticky: true

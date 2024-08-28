@@ -1,7 +1,7 @@
 ---
-title: "디자인 패턴"
+title: "Widget"
 layout: archive
-permalink: categories/design-pattern
+permalink: categories/widget
 author_profile: true
 sidebar_main: true
 ---
@@ -10,5 +10,5 @@ sidebar_main: true
 
 ***
 
-{% assign posts = site.categories['Design Pattern'] %}
+{% assign posts = site.categories.Widget %}
 {% for post in posts %} {% include archive-single2.html type=page.entries_layout %} {% endfor %}

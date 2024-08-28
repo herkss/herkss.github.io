@@ -3,7 +3,7 @@ title:  "decoration"
 excerpt: "decoration"
 
 categories:
-  - Flutter
+  - Widget
 tags:
   - [decoration, 플러터, 데코레이션,]
 

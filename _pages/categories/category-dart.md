@@ -1,7 +1,7 @@
 ---
-title: "Dart"
+title: "Gallery"
 layout: archive
-permalink: categories/dart
+permalink: categories/gallery
 author_profile: true
 sidebar_main: true
 ---
@@ -10,5 +10,5 @@ sidebar_main: true
 
 ***
 
-{% assign posts = site.categories.Dart %}
+{% assign posts = site.categories.Gallery %}
 {% for post in posts %} {% include archive-single2.html type=page.entries_layout %} {% endfor %}

@@ -3,7 +3,7 @@ title:  "TextFormField"
 excerpt: "TextFormField-텍스트폼필드"
 
 categories:
-  - Flutter
+  - Widget
 tags:
   - [TextFormField, 플러터, 텍스트폼필드, ]
 

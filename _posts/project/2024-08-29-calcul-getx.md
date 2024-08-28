@@ -1,20 +1,19 @@
 ---
-title:  "계산기" 
-excerpt: "간단한 계산기앱"
+title:  "Calculator" 
+excerpt: "간단계산기"
 
 categories:
   - Project
 tags:
-  - [계산기, 플러터, Github, Calculator, ]
+  - [계산기, 플러터, Github, ]
 
 toc: true
 toc_sticky: true
  
-date: 2024-08-29
-last_modified_at: 2024-08-29
+date: 2024-08-06
+last_modified_at: 2024-08-06
 comments: true
 ---
-
 
 
 

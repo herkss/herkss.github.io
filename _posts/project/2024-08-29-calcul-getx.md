@@ -1,4 +1,19 @@
+---
+title:  "계산기" 
+excerpt: "간단한 계산기앱"
 
+categories:
+  - Project
+tags:
+  - [계산기, 플러터, Github,  calculator,]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-08-29
+last_modified_at: 2024-08-29
+comments: true
+---
 
 
 

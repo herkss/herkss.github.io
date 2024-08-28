@@ -3,7 +3,7 @@
 <https://herkss.github.io>
 
 
-![herkss face](https://herkss.github.io/assets/images/1103.jpg)
-<p align="center">
-<img src="https://herkss.github.io/assets/images/1103.jpg", height="50px", width="50px">
-</p>
+
+
+![herks](https://herkss.github.io/assets/images/1103.jpg){: width="100%" height="100%"}
+  

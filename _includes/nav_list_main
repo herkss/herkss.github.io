@@ -16,28 +16,28 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Flutter" %}
-                        <li><a href="/categories/flutter" class="">  _ Flutter({{category[1].size}})</a></li>
+                        <li><a href="/categories/flutter" class="">  _ flutter({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Dart" %}
-                        <li><a href="/categories/dart" class="">  _ Dart({{category[1].size}})</a></li>
+                        <li><a href="/categories/dart" class="">  _ dart({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Widget" %}
-                        <li><a href="/categories/widget" class="">  _ Widget ({{category[1].size}})</a></li>
+                        <li><a href="/categories/widget" class="">  _ widget ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Project" %}
-                        <li><a href="/categories/project" class="">  _ Project({{category[1].size}})</a></li>
+                        <li><a href="/categories/project" class="">  _ project({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -50,7 +50,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Vlog" %}
-                        <li><a href="/categories/vlog" class="">  _ VLOG({{category[1].size}})</a></li>
+                        <li><a href="/categories/vlog" class="">  _ vlog({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -63,7 +63,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Gallery" %}
-                        <li><a href="/categories/gallery" class="">  _ Gallery({{category[1].size}})</a></li>
+                        <li><a href="/categories/gallery" class="">  _ gallery({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -73,11 +73,11 @@
 
 
 
-        <span class="nav__sub-title">Window Clean</span>
+        <span class="nav__sub-title">Clean</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Clean" %}
-                        <li><a href="/categories/clean" class="">  _ Window clean({{category[1].size}})</a></li>
+                        <li><a href="/categories/clean" class="">  _ clean({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

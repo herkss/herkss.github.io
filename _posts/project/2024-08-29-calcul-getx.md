@@ -15,7 +15,7 @@ last_modified_at: 2024-08-06
 comments: true
 ---
 
-
+<img src="https://herkss.github.io/assets/images/proj_cal.png" width="300" height="600" />
 
 Flutter와 GetX를 활용하여 UI가 예쁜 계산기를 만드는 예제를 소개하겠습니다. 이 예제에서는 GetX 상태 관리 패키지를 사용하여 상태를 관리하고, Flutter의 위젯을 활용해 디자인된 계산기 앱을 구현합니다.
 

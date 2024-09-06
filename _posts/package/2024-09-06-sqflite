@@ -1,0 +1,226 @@
+---
+title:  "sqflite-로컬데이터베이스" 
+excerpt: "sqflite"
+
+categories:
+  - Package
+tags:
+  - [sqflite, flutter, package, 로컬데이터베이스, ]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-09-06
+last_modified_at: 2024-09-06
+comments: true
+---
+
+
+
+`sqflite` 패키지는 Flutter에서 SQLite 데이터베이스를 사용하여 로컬 데이터 저장 및 관리를 지원하는 패키지입니다. 이 패키지를 통해 Flutter 애플리케이션에서 데이터베이스를 생성하고, 테이블을 만들며, CRUD(생성, 읽기, 업데이트, 삭제) 작업을 수행할 수 있습니다.
+
+### 설치
+
+`pubspec.yaml` 파일에 `sqflite` 패키지를 추가합니다:
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: ^2.0.0+4  # 최신 버전으로 변경될 수 있습니다.
+  path: ^1.8.0  # 데이터베이스 파일의 경로를 관리하기 위한 패키지
+```
+
+그런 다음, 패키지를 설치합니다:
+
+```bash
+flutter pub get
+```
+
+### 사용 예제
+
+다음은 `sqflite`를 사용하여 간단한 Flutter 애플리케이션을 만드는 예제입니다. 이 애플리케이션은 사용자 정보를 저장하고, 조회하는 기능을 포함합니다.
+
+**1. 데이터베이스 및 테이블 설정**
+
+**`database_helper.dart`**
+
+```dart
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
+class DatabaseHelper {
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  factory DatabaseHelper() => _instance;
+  static Database? _database;
+
+  DatabaseHelper._internal();
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
+
+  Future<Database> _initDatabase() async {
+    String path = join(await getDatabasesPath(), 'my_database.db');
+    return await openDatabase(
+      path,
+      onCreate: (db, version) {
+        return db.execute(
+          "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER)",
+        );
+      },
+      version: 1,
+    );
+  }
+
+  Future<void> insertUser(Map<String, dynamic> user) async {
+    final db = await database;
+    await db.insert(
+      'users',
+      user,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> getUsers() async {
+    final db = await database;
+    return await db.query('users');
+  }
+
+  Future<void> updateUser(Map<String, dynamic> user) async {
+    final db = await database;
+    await db.update(
+      'users',
+      user,
+      where: "id = ?",
+      whereArgs: [user['id']],
+    );
+  }
+
+  Future<void> deleteUser(int id) async {
+    final db = await database;
+    await db.delete(
+      'users',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+  }
+}
+```
+
+### 설명
+
+- **`_initDatabase()`**: 데이터베이스 파일을 생성하고 테이블을 설정합니다.
+- **`insertUser()`**: 사용자 정보를 데이터베이스에 삽입합니다.
+- **`getUsers()`**: 사용자 정보를 조회합니다.
+- **`updateUser()`**: 사용자 정보를 업데이트합니다.
+- **`deleteUser()`**: 사용자 정보를 삭제합니다.
+
+**2. UI 및 데이터베이스 사용**
+
+**`main.dart`**
+
+```dart
+import 'package:flutter/material.dart';
+import 'database_helper.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: UserScreen(),
+    );
+  }
+}
+
+class UserScreen extends StatefulWidget {
+  @override
+  _UserScreenState createState() => _UserScreenState();
+}
+
+class _UserScreenState extends State<UserScreen> {
+  final DatabaseHelper _dbHelper = DatabaseHelper();
+  List<Map<String, dynamic>> _users = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsers();
+  }
+
+  Future<void> _loadUsers() async {
+    final users = await _dbHelper.getUsers();
+    setState(() {
+      _users = users;
+    });
+  }
+
+  Future<void> _addUser() async {
+    await _dbHelper.insertUser({'name': 'John Doe', 'age': 30});
+    _loadUsers();
+  }
+
+  Future<void> _updateUser(int id) async {
+    await _dbHelper.updateUser({'id': id, 'name': 'Jane Doe', 'age': 28});
+    _loadUsers();
+  }
+
+  Future<void> _deleteUser(int id) async {
+    await _dbHelper.deleteUser(id);
+    _loadUsers();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('User Database')),
+      body: ListView.builder(
+        itemCount: _users.length,
+        itemBuilder: (context, index) {
+          final user = _users[index];
+          return ListTile(
+            title: Text(user['name']),
+            subtitle: Text('Age: ${user['age']}'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () => _updateUser(user['id']),
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () => _deleteUser(user['id']),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addUser,
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+```
+
+### 설명
+
+- **`_loadUsers()`**: 데이터베이스에서 사용자 목록을 로드합니다.
+- **`_addUser()`**: 새 사용자를 데이터베이스에 추가합니다.
+- **`_updateUser()`**: 특정 사용자의 정보를 업데이트합니다.
+- **`_deleteUser()`**: 특정 사용자를 데이터베이스에서 삭제합니다.
+
+이 예제에서는 기본적인 CRUD 작업을 수행하는 방법을 보여줍니다. 
+데이터베이스의 작업은 비동기적으로 수행되며, Flutter의 상태 관리 기법을 사용하여 UI를 업데이트합니다. 
+`sqflite` 패키지를 통해 로컬 데이터베이스를 활용하여 Flutter 애플리케이션에서 효율적으로 데이터를 관리할 수 있습니다.
+
+

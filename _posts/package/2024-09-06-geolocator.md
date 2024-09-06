@@ -1,3 +1,20 @@
+---
+title:  "geolocator-위치정보가져오기" 
+excerpt: "geolocator"
+
+categories:
+  - Package
+tags:
+  - [geolocator, flutter, package, 위치정보가져오기,]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-09-06
+last_modified_at: 2024-09-06
+comments: true
+---
+
 `geolocator` 패키지는 Flutter에서 위치 정보를 쉽게 가져올 수 있도록 도와주는 패키지입니다. 이를 통해 사용자의 현재 위치를 가져오거나, 위치 기반 서비스를 구현할 수 있습니다.
 
 ### 주요 기능

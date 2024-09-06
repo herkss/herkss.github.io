@@ -16,28 +16,35 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Flutter" %}
-                        <li><a href="/categories/flutter" class="">  _ flutter({{category[1].size}})</a></li>
+                        <li><a href="/categories/flutter" class="">flutter({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Dart" %}
-                        <li><a href="/categories/dart" class="">  _ dart({{category[1].size}})</a></li>
+                        <li><a href="/categories/dart" class="">dart({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Widget" %}
-                        <li><a href="/categories/widget" class="">  _ widget ({{category[1].size}})</a></li>
+                        <li><a href="/categories/widget" class="">widget ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Project" %}
-                        <li><a href="/categories/project" class="">  _ project({{category[1].size}})</a></li>
+                        <li><a href="/categories/project" class="">project({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Package" %}
+                        <li><a href="/categories/package" class="">package({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -50,7 +57,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Vlog" %}
-                        <li><a href="/categories/vlog" class="">  _ vlog({{category[1].size}})</a></li>
+                        <li><a href="/categories/vlog" class="">vlog({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -59,11 +66,11 @@
 
 
 
-        <span class="nav__sub-title">Gallery</span>
+        <span class="nav__sub-title">GALLERY</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Gallery" %}
-                        <li><a href="/categories/gallery" class="">  _ gallery({{category[1].size}})</a></li>
+                        <li><a href="/categories/gallery" class="">gallery({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -73,11 +80,11 @@
 
 
 
-        <span class="nav__sub-title">Clean</span>
+        <span class="nav__sub-title">ClEAN</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Clean" %}
-                        <li><a href="/categories/clean" class="">  _ clean({{category[1].size}})</a></li>
+                        <li><a href="/categories/clean" class="">clean({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -93,7 +100,7 @@
 
       </li>
 <br>
-<a href="https://blog.naver.com/herks" height="500" width="500" target="_blank">
+<a href="https://blog.naver.com/herks" height="1000" width="1000" target="_blank">
 <img src="https://herkss.github.io/assets/images/herks-clean-logo.png" alt="헉스클린 블로그 가기">
 </a>
             <br>      

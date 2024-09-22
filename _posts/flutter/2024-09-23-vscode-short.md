@@ -1,3 +1,23 @@
+---
+title:  "VS code 단축키 -플러터-" 
+excerpt: "VS code 단축키 -플러터-"
+
+categories:
+  - Flutter
+tags:
+  - [vocode, 단축키, 플러터, Github, ]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-08-06
+last_modified_at: 2024-09-23
+comments: true
+---
+
+
+
+
 VSCode에서 Flutter 개발을 할 때 유용한 단축키를 30가지 소개할게요. 이 단축키들은 코드 작성, 디버깅, 탐색 등 다양한 작업에 도움을 줄 것입니다.
 
 ### 기본 편집 단축키

@@ -1,11 +1,11 @@
 ---
-title:  "Skeleton-로딩상태임시보여주시" 
-excerpt: "skeleton"
+title:  "Skeletons-로딩상태임시보여주시" 
+excerpt: "skeletons"
 
 categories:
   - Package
 tags:
-  - [skeleton, flutter, widget, package]
+  - [skeletons, flutter, widget, package]
 
 toc: true
 toc_sticky: true
@@ -16,7 +16,7 @@ comments: true
 ---
 
 
-플러터(Flutter)에서 **Skeleton 패키지**는 로딩 상태를 사용자에게 자연스럽게 보여주기 위해 사용되는 라이브러리입니다. 애플리케이션에서 데이터가 로드될 때, 콘텐츠 대신 뼈대(Skeleton) 모양의 로딩 화면을 보여주어 사용자가 콘텐츠를 기다리며 앱이 멈춘 것처럼 보이지 않도록 합니다. 이를 통해 사용자 경험을 향상시키고, 로딩 상태에서도 비주얼 피드백을 제공합니다.
+플러터(Flutter)에서 **Skeletons 패키지**는 로딩 상태를 사용자에게 자연스럽게 보여주기 위해 사용되는 라이브러리입니다. 애플리케이션에서 데이터가 로드될 때, 콘텐츠 대신 뼈대(Skeleton) 모양의 로딩 화면을 보여주어 사용자가 콘텐츠를 기다리며 앱이 멈춘 것처럼 보이지 않도록 합니다. 이를 통해 사용자 경험을 향상시키고, 로딩 상태에서도 비주얼 피드백을 제공합니다.
 
 ### 주요 특징
 1. **쉬운 사용**: 간단하게 구현하여 UI 요소의 로딩 상태를 시각적으로 표현할 수 있습니다.

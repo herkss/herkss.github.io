@@ -1,3 +1,20 @@
+---
+title:  "skeletons와 skeletonizer차이" 
+excerpt: "skeletons와 skeletonizer차이"
+
+categories:
+  - Package
+tags:
+  - [skeletons, skeletonizer, widget, package]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-09-24
+last_modified_at: 2024-09-24
+comments: true
+---
+
 플러터(Flutter)에서 **Skeletons**와 **Skeletonizer**는 비슷한 목적을 위해 사용되지만, 각각의 목적과 사용 방법이 다릅니다. 두 용어 모두 **로딩 상태**를 나타내는 UI를 처리하는 데 사용되지만, 차이점은 다음과 같습니다.
 
 ### 1. **Skeletons**

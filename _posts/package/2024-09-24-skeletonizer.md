@@ -1,3 +1,21 @@
+---
+title:  "skeletonizer" 
+excerpt: "skeletonizer"
+
+categories:
+  - Package
+tags:
+  - [skeletonizer, skeletonizer, widget, package]
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-09-24
+last_modified_at: 2024-09-24
+comments: true
+---
+
+
 **Skeletonizer**는 Flutter에서 기존 위젯에 스켈레톤(Skeleton) 애니메이션을 적용하는 데 사용되는 패키지입니다. Skeletonizer의 핵심은 기존의 UI를 자동으로 스켈레톤 형태로 변환하여 로딩 상태를 시각적으로 표현하는 데 있습니다. 일반적으로 데이터 로딩이 필요한 상황에서, Skeletonizer를 활용해 복잡한 UI를 빠르게 스켈레톤화하여 사용자 경험을 개선할 수 있습니다.
 
 ### Skeletonizer의 주요 특징

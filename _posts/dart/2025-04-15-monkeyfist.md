@@ -1,16 +1,18 @@
 ---
-title:  "몽키피스트 사용방법[호신용]" 
+title:  "몽키피스트 사용방법" 
+excerpt: "몽키피스트 사용방법"
 
 categories:
   - Dart
 tags:
-  - [paracord, monkey fist]
+  - [몽키피스트, MonkeyFist, 호신용, 파라코드 ]
 
 toc: true
 toc_sticky: true
-
-date: 2025-04-15
-last_modified_at: 2025-04-15
+ 
+date: 2024-05-15
+last_modified_at: 2025-05-15
+comments: true
 ---
 
 # 몽키피스트로 호신하기: 위협 상황에서의 사용법

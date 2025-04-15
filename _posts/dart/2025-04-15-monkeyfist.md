@@ -1,11 +1,11 @@
 ---
-title:  "몽키피스트 사용방법" 
+title:  "How to use the MonkeyFist" 
 excerpt: "몽키피스트 사용방법"
 
 categories:
   - Dart
 tags:
-  - [몽키피스트, MonkeyFist, 호신용, 파라코드 ]
+  - [몽키피스트, MonkeyFist, 호신용, 파라코드, ]
 
 toc: true
 toc_sticky: true

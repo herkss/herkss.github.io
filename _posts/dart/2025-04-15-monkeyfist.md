@@ -16,8 +16,8 @@ comments: true
 ---
 
 # 몽키피스트로 호신하기: 위협 상황에서의 사용법
+![몽키피스트사용방법](/assets/images/mfist.png)
 
-![몽키피스트 키링](images/monkeyfist_keychain.jpg)
 
 ## 개요
 
@@ -40,7 +40,7 @@ comments: true
 - 어두운 골목길이나 위험 지역을 지나갈 때는 몽키피스트를 손가락에 미리 걸어 준비합니다.
 - 손에 쥐고, 로프를 감은 부분이 손등 밖으로 나오게 합니다.
 
-![손에 걸기](images/monkeyfist_hand.jpg)
+
 
 ---
 
@@ -59,7 +59,7 @@ comments: true
 
 - 타격 시에는 “그만 둬!” 등의 말로 제압 의지를 표현하세요.
 
-![타격 이미지](images/monkeyfist_attack.jpg)
+
 
 ---
 
@@ -80,8 +80,7 @@ comments: true
 
 ## 참고 자료
 
-- [몽키피스트 만드는 법 (영상)](https://www.youtube.com/watch?v=1tqLQG1nU8s)
-- [호신용 도구 사용법 가이드](https://www.selfdefense.org/tools)
+
 
 ---
 

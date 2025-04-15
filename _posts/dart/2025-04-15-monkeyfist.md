@@ -14,8 +14,8 @@ date: 2024-05-15
 last_modified_at: 2025-05-15
 comments: true
 ---
-# 유튜브 [허배달]을 구독해주세요 ~~^^
-![유튜브로고](/assets/images/u-logo.webp)
+# 유튜브 에서 [허배달]을 검색하여 구독해주세요 ~~^^
+<img src="/assets/images/u-logo.webp" alt="허배달 구독해주세요" width="200">
 
 # 몽키피스트로 호신하기: 위협 상황에서의 사용법
 ![몽키피스트사용방법](/assets/images/mfist.png)

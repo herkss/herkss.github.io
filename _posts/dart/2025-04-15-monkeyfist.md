@@ -16,7 +16,7 @@ comments: true
 ---
 # 유튜브 에서 [허배달]을 검색하여 구독해주세요 ~~^^
 
-<a href="https://www.youtube.com/herdeli?sub_confirmation=1">
+<a href="https://www.youtube.com/@herdeli?sub_confirmation=1">
   <img src="/assets/images/u-logo.webp" alt="유튜브 구독" width="200">
 </a>
 

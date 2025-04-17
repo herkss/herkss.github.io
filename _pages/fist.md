@@ -53,14 +53,13 @@
   }
 </style>
 
-<h1> 허배달 유튜브 구독하러 GO GO !</h1>
-<h1> 몽키피스트 사용방법을 알아봅시다~</h1>
-<p>구독은 나의힘 구독해주시고 더 많은 정보를 알아보세요!</p>
-<button class="subscribe-btn" onclick="openSubscribe()">구독하고 계속하기</button>
+<h1>유튜브 구독하기</h1>
+<p>더 나은 콘텐츠와 혜택을 받으려면 지금 구독하세요.<br>몽키피스트 사용법!</p>
+<button class="subscribe-btn" onclick="openSubscribe()">구독하고 계속</button>
 
 <script>
   function openSubscribe() {
     window.open("https://www.youtube.com/@herdeli?sub_confirmation=1", "_blank");
-    window.location.href = "https://herkss.github.io/dart/monkeyfist/";
+    window.location.href = "https://herkss.github.io/subscribe";
   }
 </script>

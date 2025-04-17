@@ -54,13 +54,13 @@ permalink: /subscribe/
   }
 </style>
 
-<h1>유튜브 구독하고 혜택 받기!</h1>
+<h1>유튜브 구독하고 더 많은 정보 받기!</h1>
 <p>구독하시면 더 많은 꿀정보와 콘텐츠가 기다리고 있어요!</p>
 <button class="subscribe-btn" onclick="openSubscribe()">구독하고 계속하기</button>
 
 <script>
   function openSubscribe() {
-    window.open("https://www.youtube.com/herdeli?sub_confirmation=1", "_blank");
+    window.open("https://www.youtube.com/@herdeli?sub_confirmation=1", "_blank");
     window.location.href = "https://your-homepage.com";
   }
 </script>

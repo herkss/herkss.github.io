@@ -56,6 +56,7 @@ permalink: /subscribe/
 </style>
 
 <h1> 허배달 유튜브 구독하러 GO GO !</h1>
+<h1> 몽키피스트 사용방법을 알아봅시다~</h1>
 <p>구독은 나의힘 구독해주시고 더 많은 정보를 알아보세요!</p>
 <button class="subscribe-btn" onclick="openSubscribe()">구독하고 계속하기</button>
 

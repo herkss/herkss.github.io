@@ -55,8 +55,8 @@ permalink: /subscribe/
   }
 </style>
 
-<h1>유튜브 구독하고 혜택 받기!</h1>
-<p>어두운 분위기 속에서도 콘텐츠는 빛납니다. 지금 구독하세요!</p>
+<h1> 허배달 유튜브 구독하러 GO GO !</h1>
+<p>구독은 나의힘 구독해주시고 더 많은 정보를 알아보세요!</p>
 <button class="subscribe-btn" onclick="openSubscribe()">구독하고 계속하기</button>
 
 <script>

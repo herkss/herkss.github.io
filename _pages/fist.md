@@ -1,3 +1,10 @@
+---
+layout: default
+title: 유튜브 구독
+permalink: /subscribe/
+---
+
+
 <style>
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;

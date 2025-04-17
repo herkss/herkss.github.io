@@ -60,8 +60,8 @@ permalink: /subscribe/
   }
 </style>
 
-<h1>유튜브 구독하기</h1>
-<p>더 나은 콘텐츠와 혜택을 받으려면 지금 구독하세요.<br>몽키피스트 사용법!</p>
+<h1>유튜브 구독과 몽키피스트 사용법</h1>
+<p>허배달구독하고.<br>몽키피스트 사용법 알아보자!</p>
 <button class="subscribe-btn" onclick="openSubscribe()">구독하고 계속</button>
 
 <script>

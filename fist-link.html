@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>구독 유도 페이지</title>
+    <script>
+      function openSubscribe() {
+        // 유튜브 구독 링크 새 창으로 열기
+        window.open("https://www.youtube.com/channel/채널ID?sub_confirmation=1", "_blank");
+
+        // 이 탭은 홈페이지로 이동
+        window.location.href = "https://your-homepage.com";
+      }
+    </script>
+  </head>
+  <body>
+    <h2>아래 버튼을 눌러 유튜브 구독을 해주세요!</h2>
+    <button onclick="openSubscribe()">구독하고 계속하기</button>
+  </body>
+</html>

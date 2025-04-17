@@ -63,6 +63,6 @@ permalink: /subscribe/
 <script>
   function openSubscribe() {
     window.open("https://www.youtube.com/@herdeli?sub_confirmation=1", "_blank");
-    window.location.href = "https://herkss.github.io/dart/2025-04-15-monkeyfist.md";
+    window.location.href = "https://herkss.github.io/dart/monkeyfist/";
   }
 </script>

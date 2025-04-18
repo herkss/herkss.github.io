@@ -65,6 +65,8 @@ permalink: /subscribe/
 <button class="subscribe-btn" onclick="openSubscribe()">구독하고 계속</button>
 <h1>여성들의 든든한 호신용 악세서리</h1>
 <h1>몽키피스트 구입문의 </h1>
+<a href="sms:01096424467">010-9642-4467로 문자 보내기</a>
+<a href="https://pf.kakao.com/_nFZfn">카카오톡으로 문의하기</a>
 <h1><a href="tel:01096424467">010-9642-4467</a></h1>
 
 <h1>문자로 문의해주세요!! </h1>

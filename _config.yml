@@ -39,9 +39,9 @@ comments:
     # https://developers.facebook.com/docs/plugins/comments
     appid                :
     num_posts            : # 5 (default)
-    colorscheme          : # "light" (default), "dark"
+    colorscheme          : "light" (default), "dark"
   utterances:
-    theme                : "photon-dark" # "github-light" (default), "github-dark"
+    theme                : "github-light" # "github-light" (default), "github-dark"
     issue_term           : "pathname" # "pathname" (default)
   staticman:
     branch               : # "master"
@@ -93,10 +93,10 @@ analytics:
 
 # Site Author
 author:
-  name             : "HERKSS GITHUB BLOG"
+  name             : "허배달블로그"
   avatar           : "https://herkss.github.io/assets/images/1.jpg"
   bio              : "진정한 승자로..."
-  #location         : "Seoul, South Korea"
+  #location         : "Jeon-ju, South Korea"
     #- label: "Instagram"
     #  icon: "fab fa-fw fa-instagram"
     #  url: "https://instagram.com/06.25ash"

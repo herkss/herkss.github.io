@@ -1,0 +1,12 @@
+main:
+  - title: "Home"
+    url: /
+
+  - title: "App's"
+    url: /apps/
+
+  - title: "UserGuide"
+    url: /userguide/
+
+  - title: "Info"
+    url: /info/

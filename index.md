@@ -1,5 +1,5 @@
 ---
 layout: home
-title: "HERGANG SOFT"
+title: "HERGANG SOFT[허갱소프트]"
 author_profile: true
 ---

@@ -13,5 +13,5 @@ sidebar:
   
 comments:
   provider: "utterances"
-  utterances:
+  utterances: 
     theme: "github-dark"

@@ -1,14 +1,19 @@
 # 상단 내비게이션 바
+
 main:
   - title: "Home"
     url: /
-  - title: "App's"
-    url: /apps/
+  - title: "Project" # 드롭다운 예시
+    children:
+      - title: "배달길"
+        url: /apps/baedalgil/
+      - title: "네온 테트리스"
+        url: /apps/neon-tetris/
   - title: "UserGuide"
     url: /userguide/
+
   - title: "Info"
     url: /info/
-
 # 사이드바 (docs라는 이름으로 정의)
 docs:
   - title: "Menu"

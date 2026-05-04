@@ -3,6 +3,7 @@ title: "배달길앱출시"
 excerpt: "배달커뮤니티의 최강자가되자! "
 categories:
   - apps
+layout: single  # 이 줄을 추가해 보세요
 tags:
   - flutter
   - android

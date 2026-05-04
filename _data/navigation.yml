@@ -1,26 +1,23 @@
+# 상단 내비게이션 바
 main:
   - title: "Home"
     url: /
-
   - title: "App's"
     url: /apps/
-
   - title: "UserGuide"
     url: /userguide/
-
   - title: "Info"
     url: /info/
 
-
-sidebar:
-  - title: "Home"
-    url: /
-
-  - title: "App's"
-    url: /apps/
-
-  - title: "UserGuide"
-    url: /userguide/
-
-  - title: "Info"
-    url: /info/
+# 사이드바 (docs라는 이름으로 정의)
+docs:
+  - title: "Menu"
+    children:
+      - title: "Home"
+        url: /
+      - title: "App's"
+        url: /apps/
+      - title: "UserGuide"
+        url: /userguide/
+      - title: "Info"
+        url: /info/

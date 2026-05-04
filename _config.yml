@@ -19,3 +19,17 @@ sidebar:
 include:
   - _pages
   - _data
+
+
+
+
+# _config.yml 하단에 추가
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      toc: true
+      toc_sticky: true
+      toc_label: "Contents"

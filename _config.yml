@@ -8,3 +8,7 @@ plugins:
 
 minimal_mistakes_skin: "contrast"
   
+comments:
+  provider: "utterances"
+  utterances:
+    theme: "github-dark"

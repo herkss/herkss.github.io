@@ -9,7 +9,7 @@ plugins:
 minimal_mistakes_skin: "contrast"
 
 sidebar:
-  nav: "docs"
+  nav: "docs" 
   
 comments:
   provider: "utterances"

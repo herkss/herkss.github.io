@@ -4,6 +4,7 @@ baseurl: ""
 
 # 테마 설정
 remote_theme: "mmistakes/minimal-mistakes"
+theme: "minimal-mistakes-jekyll" # 이 줄을 추가하여 테마를 명시적으로 지정합니다.
 minimal_mistakes_skin: "contrast"
 
 # 플러그인 설정

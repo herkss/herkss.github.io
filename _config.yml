@@ -15,3 +15,6 @@ comments:
   provider: "utterances"
   utterances:  
     theme: "github-dark" 
+
+include:
+  - _pages

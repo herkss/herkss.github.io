@@ -20,7 +20,7 @@ include:
   - _pages
   - _data
 
-author_profile: true
+
 
 
 # _config.yml 하단에 추가
@@ -33,3 +33,4 @@ defaults:
       toc: true
       toc_sticky: true
       toc_label: "Contents"
+      author_profile: true

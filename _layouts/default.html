@@ -1,0 +1,51 @@
+<div class="layout">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- PROFILE -->
+    <div class="profile">
+      <img src="/assets/images/profile.png" />
+      <div class="name">HERGANG SOFT</div>
+    </div>
+
+    <!-- LEFT MENU -->
+    <nav class="left-menu">
+      <a href="/">Home</a>
+      <a href="/apps/">Apps</a>
+      <a href="/userguide/">UserGuide</a>
+      <a href="/info/">Info</a>
+    </nav>
+
+  </aside>
+
+  <!-- RIGHT AREA -->
+  <div class="right">
+
+    <!-- TOP MENU -->
+    <div class="top-menu">
+      <a href="/">Home</a>
+      <a href="/apps/">Apps</a>
+      <a href="/userguide/">UserGuide</a>
+      <a href="/info/">Info</a>
+    </div>
+
+    <!-- CONTENT AREA -->
+    <div class="content-wrapper">
+
+      <main class="content">
+        {{ content }}
+      </main>
+
+      <!-- TOC -->
+      <aside class="toc">
+        {% if page.toc %}
+          {% include toc.html %}
+        {% endif %}
+      </aside>
+
+    </div>
+
+  </div>
+
+</div>

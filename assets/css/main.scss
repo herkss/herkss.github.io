@@ -1,0 +1,68 @@
+---
+---
+
+.layout {
+  display: flex;
+}
+
+/* LEFT SIDEBAR */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 240px;
+  height: 100vh;
+  background: #111;
+  color: white;
+  padding: 20px;
+}
+
+/* PROFILE */
+.profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile img {
+  width: 70px;
+  border-radius: 50%;
+}
+
+.left-menu a {
+  display: block;
+  color: white;
+  padding: 8px 0;
+  text-decoration: none;
+}
+
+/* RIGHT AREA */
+.right {
+  margin-left: 240px;
+}
+
+/* TOP MENU */
+.top-menu {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* CONTENT + TOC */
+.content-wrapper {
+  display: flex;
+  padding: 20px;
+}
+
+/* POST */
+.content {
+  flex: 3;
+}
+
+/* TOC */
+.toc {
+  flex: 1;
+  padding-left: 20px;
+  position: sticky;
+  top: 20px;
+}

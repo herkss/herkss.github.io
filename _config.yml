@@ -13,8 +13,8 @@ plugins:
   - jekyll-remote-theme
 
 # 사이드바 및 포함 설정
-sidebar:
-  nav: "docs"
+# sidebar:
+#   nav: "docs"
 
 include:
   - _pages
@@ -33,4 +33,4 @@ defaults:
       toc: true
       toc_sticky: true
       toc_label: "Contents"
-      author_profile: true
+      # author_profile: true

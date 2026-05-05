@@ -20,7 +20,7 @@ include:
   - _pages
   - _data
 
-
+author_profile: true
 
 
 # _config.yml 하단에 추가

@@ -1,59 +1,33 @@
+---
+layout: compress
+---
+
 <!doctype html>
-<html lang="ko" class="no-js">
+<html lang="{{ site.locale | slice: 0, 2 | default: 'en' }}" class="no-js">
   <head>
-    {% include head.html %} <!-- 테마의 표준 CSS를 가장 먼저 불러옵니다 -->
-    <style>
-      /* 사이드바 너비를 고정하고 본문과 겹치지 않게 조정합니다 */
-      .sidebar {
-        width: 260px !important;
-        float: left;
-        margin-right: 1.5em;
-      }
-      /* 본문 영역이 사이드바 옆에 나란히 오도록 설정합니다 */
-      .page {
-        width: calc(100% - 300px);
-        float: left;
-      }
-      /* 전체 컨테이너 정렬 및 float 해제 */
-      #main {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 2em 1em;
-        display: block;
-        overflow: hidden; 
-      }
-      /* 검은색 배경색 충돌 방지 */
-      .layout--single .sidebar {
-        background: transparent !important;
-      }
-    </style>
+    {% include head.html %} <!-- 테마의 모든 CSS와 설정이 여기서 로드됩니다 -->
   </head>
 
-  <body class="layout--{{ page.layout | default: layout.layout }}">
-    {% include masthead.html %} <!-- 상단 메뉴바 출력 -->
+  <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %} {{ page.classes | default: layout.classes | join: ' ' }}{% endif %}">
+    {% include skip-links.html %}
+    {% include masthead.html %} <!-- 상단 메뉴바 -->
 
-    <div id="main" role="main">
-      <!-- 테마 내장 사이드바: 프로필 정보와 navigation.yml을 자동으로 불러옵니다 -->
-      <div class="sidebar sticky">
-        {% include sidebar.html %}
-      </div>
-
-      <!-- 본문 영역: 배달길 앱 출시 등의 포스팅이 표시됩니다 -->
-      <article class="page">
-        <div class="page__inner-wrap">
-          {% if page.title %}
-            <header>
-              <h1 class="page__title">{{ page.title }}</h1>
-            </header>
-          {% endif %}
-          <section class="page__content">
-            {{ content }}
-          </section>
-        </div>
-      </article>
+    <div class="initial-content">
+      {{ content }} <!-- 포스트 내용이 테마 규격에 맞춰 들어갑니다 -->
     </div>
 
-    {% include footer.html %}
+    {% if site.search == true %}
+      <div class="search-content">
+        {% include search-loader.html %}
+      </div>
+    {% endif %}
+
+    <div id="footer" class="page__footer">
+      <footer>
+        {% include footer.html %}
+      </footer>
+    </div>
+
     {% include scripts.html %}
   </body>
 </html>

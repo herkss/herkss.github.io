@@ -1,23 +1,37 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" class="no-js">
   <head>
-    <meta charset="utf-8">
-    {% include head.html %} <!-- 테마의 기본 head를 포함하여 CSS/JS 오류 원천 차단 -->
+    {% include head.html %} <!-- 테마의 기본 설정을 그대로 가져와 에러 방지 -->
     <style>
-      /* 개발자님이 요청하신 3단 레이아웃을 위한 최소한의 추가 스타일 */
+      /* 3단 레이아웃을 위한 필수 스타일 추가 */
       .masthead { border-bottom: 1px solid #f2f3f3; }
-      .initial-content { padding-top: 2em; }
-      /* 배달길 앱 네온 테마 스타일 포인트 */
-      .page__title { color: #2c3e50; border-bottom: 3px solid #00FFD1; display: inline-block; }
+      .initial-content { 
+        display: flex; 
+        justify-content: center; 
+        padding: 2em 1em;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      /* 사이드바와 본문 배치 */
+      .sidebar { width: 260px; padding-right: 20px; }
+      .archive { flex: 1; min-width: 0; }
     </style>
   </head>
 
   <body class="layout--{{ page.layout | default: layout.layout }}">
-    {% include skip-links.html %}
-    {% include navigation.html %} <!-- navigation.yml의 메뉴를 상단에 배치 -->
+    <!-- 에러가 났던 부분을 테마 표준 파일로 교체 -->
+    {% include masthead.html %} 
 
     <div class="initial-content">
-      {{ content }}
+      <!-- 왼쪽 사이드바 (프로필 및 navigation.yml 메뉴) -->
+      <div class="sidebar">
+        {% include sidebar.html %}
+      </div>
+
+      <!-- 중앙 본문 내용 -->
+      <main class="archive">
+        {{ content }}
+      </main>
     </div>
 
     {% include footer.html %}

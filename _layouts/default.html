@@ -5,22 +5,16 @@ layout: compress
 <!doctype html>
 <html lang="{{ site.locale | slice: 0, 2 | default: 'en' }}" class="no-js">
   <head>
-    {% include head.html %} <!-- 테마의 모든 CSS와 설정이 여기서 로드됩니다 -->
+    {% include head.html %} <!-- 테마의 표준 CSS와 설정을 로드합니다 -->
   </head>
 
-  <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %} {{ page.classes | default: layout.classes | join: ' ' }}{% endif %}">
+  <body class="layout--{{ page.layout | default: layout.layout }}">
     {% include skip-links.html %}
-    {% include masthead.html %} <!-- 상단 메뉴바 -->
+    {% include masthead.html %} <!-- 상단 네비게이션 바 -->
 
     <div class="initial-content">
-      {{ content }} <!-- 포스트 내용이 테마 규격에 맞춰 들어갑니다 -->
+      {{ content }} <!-- 포스트 및 페이지 내용이 들어가는 자리입니다 -->
     </div>
-
-    {% if site.search == true %}
-      <div class="search-content">
-        {% include search-loader.html %}
-      </div>
-    {% endif %}
 
     <div id="footer" class="page__footer">
       <footer>

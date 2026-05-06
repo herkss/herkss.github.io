@@ -1,37 +1,56 @@
 <!doctype html>
 <html lang="ko" class="no-js">
   <head>
-    {% include head.html %} <!-- 테마의 기본 설정을 그대로 가져와 에러 방지 -->
+    {% include head.html %} <!-- 테마의 표준 CSS를 가장 먼저 불러옵니다 -->
     <style>
-      /* 3단 레이아웃을 위한 필수 스타일 추가 */
-      .masthead { border-bottom: 1px solid #f2f3f3; }
-      .initial-content { 
-        display: flex; 
-        justify-content: center; 
-        padding: 2em 1em;
+      /* 사이드바 너비를 고정하고 본문과 겹치지 않게 조정합니다 */
+      .sidebar {
+        width: 260px !important;
+        float: left;
+        margin-right: 1.5em;
+      }
+      /* 본문 영역이 사이드바 옆에 나란히 오도록 설정합니다 */
+      .page {
+        width: calc(100% - 300px);
+        float: left;
+      }
+      /* 전체 컨테이너 정렬 및 float 해제 */
+      #main {
         max-width: 1280px;
         margin: 0 auto;
+        padding: 2em 1em;
+        display: block;
+        overflow: hidden; 
       }
-      /* 사이드바와 본문 배치 */
-      .sidebar { width: 260px; padding-right: 20px; }
-      .archive { flex: 1; min-width: 0; }
+      /* 검은색 배경색 충돌 방지 */
+      .layout--single .sidebar {
+        background: transparent !important;
+      }
     </style>
   </head>
 
   <body class="layout--{{ page.layout | default: layout.layout }}">
-    <!-- 에러가 났던 부분을 테마 표준 파일로 교체 -->
-    {% include masthead.html %} 
+    {% include masthead.html %} <!-- 상단 메뉴바 출력 -->
 
-    <div class="initial-content">
-      <!-- 왼쪽 사이드바 (프로필 및 navigation.yml 메뉴) -->
-      <div class="sidebar">
+    <div id="main" role="main">
+      <!-- 테마 내장 사이드바: 프로필 정보와 navigation.yml을 자동으로 불러옵니다 -->
+      <div class="sidebar sticky">
         {% include sidebar.html %}
       </div>
 
-      <!-- 중앙 본문 내용 -->
-      <main class="archive">
-        {{ content }}
-      </main>
+      <!-- 본문 영역: 배달길 앱 출시 등의 포스팅이 표시됩니다 -->
+      <article class="page">
+        <div class="page__inner-wrap">
+          {% if page.title %}
+            <header>
+              <h1 class="page__title">{{ page.title }}</h1>
+            </header>
+          {% endif %}
+          <section class="page__content">
+            {{ content }}
+          </section>
+        </div>
+      </article>
     </div>
 
     {% include footer.html %}

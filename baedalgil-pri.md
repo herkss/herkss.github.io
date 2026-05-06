@@ -1,6 +1,6 @@
 ---
 title: 개인정보처리방침
-permalink: /private_doc/
+permalink: /baedalgil-pri/
 ---
 
 # 개인정보처리방침

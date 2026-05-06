@@ -1,36 +1,38 @@
-title: "HERGANG SOFT[허갱소프트]"
+# 기본 정보
+title: "허갱소프트"
 url: "https://herkss.github.io"
-baseurl: ""
+baseurl: "" # 저장소 이름이 herkss.github.io이므로 빈값 유지
 
-# 테마 설정
+# 테마 설정 (Minimal Mistakes)
 remote_theme: "mmistakes/minimal-mistakes"
-# theme: "minimal-mistakes-jekyll" # 이 줄을 추가하여 테마를 명시적으로 지정합니다.
-minimal_mistakes_skin: "dirt"
+minimal_mistakes_skin: "dirt" # 분석하신 skin 유지
 
-# 플러그인 설정
+# 빌드 설정
 plugins:
   - jekyll-include-cache
   - jekyll-remote-theme
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
 
-# 사이드바 및 포함 설정
-# sidebar:
-#   nav: "docs"
-
+# 파일 분석 결과에 따른 경로 포함
 include:
   - _pages
   - _data
+  - assets
 
-
-
-
-# _config.yml 하단에 추가
+# 포스트 기본 설정 (오류 방지를 위해 정확한 인덴트 적용)
 defaults:
   - scope:
       path: ""
       type: posts
     values:
       layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
       toc: true
       toc_sticky: true
-      toc_label: "Contents"
-      # author_profile: true
+      toc_label: "페이지 목차"

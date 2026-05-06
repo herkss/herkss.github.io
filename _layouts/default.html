@@ -1,107 +1,26 @@
 <!doctype html>
-<html lang="{{ site.locale | slice: 0, 2 | default: 'en' }}" class="no-js">
+<html lang="ko">
   <head>
     <meta charset="utf-8">
-    <title>{{ page.title }}{% if page.title %} | {% endif %}{{ site.title }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- CSS 연결: _config.yml의 url 설정을 반영합니다 -->
-    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-    
-    {% if site.head_scripts %}
-      {% for script in site.head_scripts %}
-        <script src="{{ script | relative_url }}"></script>
-      {% endfor %}
-    {% endif %}
-
+    {% include head.html %} <!-- 테마의 기본 head를 포함하여 CSS/JS 오류 원천 차단 -->
     <style>
-      /* 레이아웃 구성을 위한 핵심 CSS 직접 포함 (main.css에 넣으셔도 됩니다) */
-      .layout { display: flex; min-height: 100vh; background-color: #fdfdfd; }
-      
-      /* 좌측 사이드바 */
-      .sidebar { 
-        width: 260px; height: 100vh; position: fixed; left: 0; top: 0;
-        background: #1c1c1e; color: white; padding: 30px 20px; z-index: 10;
-      }
-      .profile { text-align: center; margin-bottom: 30px; }
-      .profile img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #00FFD1; margin-bottom: 15px; }
-      .profile .name { font-weight: bold; font-size: 1.1rem; color: #00FFD1; }
-      .left-menu a { display: block; color: #ccc; padding: 10px 5px; text-decoration: none; border-bottom: 1px solid #333; transition: 0.3s; }
-      .left-menu a:hover { color: #00FFD1; padding-left: 10px; }
-
-      /* 우측 영역 (상단메뉴 + 본문 + TOC) */
-      .right { flex: 1; margin-left: 260px; display: flex; flex-direction: column; }
-      .top-menu { background: #fff; padding: 15px 40px; border-bottom: 1px solid #eee; display: flex; gap: 20px; }
-      .top-menu a { color: #555; text-decoration: none; font-size: 0.95rem; }
-      .top-menu a:hover { color: #000; font-weight: bold; }
-
-      /* 콘텐츠와 TOC 배치 */
-      .content-wrapper { display: flex; padding: 40px; gap: 40px; }
-      .content { flex: 1; max-width: 800px; min-width: 0; line-height: 1.7; }
-      
-      /* 우측 목차(TOC) */
-      .toc-aside { width: 220px; position: sticky; top: 40px; height: fit-content; font-size: 0.85rem; border-left: 1px solid #eee; padding-left: 20px; }
-      .toc__menu { list-style: none; padding: 0; margin: 0; }
-      .toc__menu a { color: #888; text-decoration: none; display: block; padding: 3px 0; }
-      .toc__menu a:hover { color: #00FFD1; }
-
-      /* 반응형 대응 */
-      @media (max-width: 1024px) {
-        .layout { flex-direction: column; }
-        .sidebar { position: relative; width: 100%; height: auto; }
-        .right { margin-left: 0; }
-        .content-wrapper { flex-direction: column; }
-        .toc-aside { display: none; } /* 모바일에서는 TOC 숨김 */
-      }
+      /* 개발자님이 요청하신 3단 레이아웃을 위한 최소한의 추가 스타일 */
+      .masthead { border-bottom: 1px solid #f2f3f3; }
+      .initial-content { padding-top: 2em; }
+      /* 배달길 앱 네온 테마 스타일 포인트 */
+      .page__title { color: #2c3e50; border-bottom: 3px solid #00FFD1; display: inline-block; }
     </style>
   </head>
 
-  <body>
-    <div class="layout">
-      <!-- LEFT SIDEBAR -->
-      <aside class="sidebar">
-        <div class="profile">
-          <!-- 프로필 이미지 경로 자동화 -->
-          <img src="{{ '/assets/images/profile.png' | relative_url }}" alt="{{ site.title }}">
-          <div class="name">HERGANG SOFT</div>
-        </div>
+  <body class="layout--{{ page.layout | default: layout.layout }}">
+    {% include skip-links.html %}
+    {% include navigation.html %} <!-- navigation.yml의 메뉴를 상단에 배치 -->
 
-        <!-- navigation.yml 기반의 메뉴 생성 -->
-        <nav class="left-menu">
-          {% for link in site.data.navigation.main %}
-            <a href="{{ link.url | relative_url }}">{{ link.title }}</a>
-          {% endfor %}
-        </nav>
-      </aside>
-
-      <!-- RIGHT AREA -->
-      <div class="right">
-        <!-- TOP MENU -->
-        <header class="top-menu">
-          <a href="{{ '/' | relative_url }}">Home</a>
-          <a href="{{ '/apps/' | relative_url }}">Apps</a>
-          <a href="{{ '/userguide/' | relative_url }}">UserGuide</a>
-          <a href="{{ '/info/' | relative_url }}">Info</a>
-        </header>
-
-        <!-- CONTENT + TOC -->
-        <div class="content-wrapper">
-          <main class="content">
-            {{ content }}
-          </main>
-
-          <!-- TOC (목차) 영역: 포스트에 toc: true 설정 시에만 출력 -->
-          {% if page.toc %}
-          <aside class="toc-aside">
-            <h4 class="nav__title" style="margin-top:0;"><i class="fas fa-file-alt"></i> {{ page.toc_label | default: "Contents" }}</h4>
-            {% include toc.html sanitize=true html=content h_min=2 h_max=3 class="toc__menu" %}
-          </aside>
-          {% endif %}
-        </div>
-      </div>
+    <div class="initial-content">
+      {{ content }}
     </div>
 
-    <!-- 스크립트 로드 -->
-    <script src="{{ '/assets/js/main.min.js' | relative_url }}"></script>
+    {% include footer.html %}
+    {% include scripts.html %}
   </body>
 </html>

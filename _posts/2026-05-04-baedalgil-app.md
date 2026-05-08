@@ -16,8 +16,7 @@ toc: true                # TOC(목차)를 활성화합니다.
 toc_sticky: true         # 스크롤을 내려도 목차가 화면 우측에 고정됩니다.
 toc_label: "페이지 목차"  # 목차 상단에 표시될 제목입니다. (생략 가능)
 author_profile: true
-sidebar:
-  nav: "docs"
+
 ---
 
 ## 🚀 프로젝트 소개

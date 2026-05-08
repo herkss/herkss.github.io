@@ -7,6 +7,12 @@ baseurl: "" # 저장소 이름이 herkss.github.io이므로 빈값 유지
 remote_theme: "mmistakes/minimal-mistakes"
 minimal_mistakes_skin: "dirt" # 분석하신 skin 유지
 
+
+
+classes: wide
+
+
+
 # 빌드 설정
 plugins:
   - jekyll-include-cache

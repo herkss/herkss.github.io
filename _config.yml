@@ -13,6 +13,12 @@ minimal_mistakes_skin: "dirt" # 분석하신 skin 유지
 
 
 
+# 댓글 설정
+comments:
+  provider: "disqus"
+  disqus:
+    shortname: "herkss"
+
 # 빌드 설정
 plugins:
   - jekyll-include-cache
@@ -36,16 +42,9 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: true
+      comments: true       # Disqus 댓글 활성화
       share: true
       related: true
       toc: true
       toc_sticky: true
       toc_label: "페이지 목차"
-
-
-
-comments:
-  provider: "disqus"
-  disqus:
-    shortname: "herkss"   # ← Disqus 가입 시 만든 이름

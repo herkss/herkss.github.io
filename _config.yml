@@ -42,3 +42,10 @@ defaults:
       toc: true
       toc_sticky: true
       toc_label: "페이지 목차"
+
+
+
+comments:
+  provider: "disqus"
+  disqus:
+    shortname: "herkss"   # ← Disqus 가입 시 만든 이름

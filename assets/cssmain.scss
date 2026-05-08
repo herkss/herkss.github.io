@@ -1,0 +1,12 @@
+---
+---
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}";
+@import "minimal-mistakes";
+
+/* TOC 우측 강제 고정 */
+.sidebar__right {
+  float: right !important;
+  position: sticky !important;
+  top: 2em !important;
+}

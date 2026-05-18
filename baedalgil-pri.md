@@ -1,9 +1,6 @@
 ---
 title: 개인정보처리방침
 layout: single  # 이 줄을 추가해 보세요
-toc: true                # TOC(목차)를 활성화합니다.
-toc_sticky: true         # 스크롤을 내려도 목차가 화면 우측에 고정됩니다.
-toc_label: "페이지 목차"  # 목차 상단에 표시될 제목입니다. (생략 가능)
 author_profile: true
 sidebar:
   nav: "docs"

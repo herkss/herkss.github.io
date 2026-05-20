@@ -45,6 +45,6 @@ defaults:
       comments: true       # Disqus 댓글 활성화
       share: true
       related: true
-      toc: true
-      toc_sticky: true
-      toc_label: "페이지 목차"
+      # toc: true
+      # toc_sticky: true
+      # toc_label: "페이지 목차"

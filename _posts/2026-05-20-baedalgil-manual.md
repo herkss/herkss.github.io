@@ -1,3 +1,27 @@
+---
+title: "배달길 매뉴얼"
+excerpt: "배달커뮤니티의 최강자가되자! "
+categories:
+  - apps
+layout: single  # 이 줄을 추가해 보세요
+tags:
+  - flutter
+  - android
+  - 배달
+  - 커뮤니티
+  - 위치공유
+  - 공유채팅
+  - 배달길 매뉴얼
+
+toc: true                # TOC(목차)를 활성화합니다.
+toc_sticky: true         # 스크롤을 내려도 목차가 화면 우측에 고정됩니다.
+toc_label: "페이지 목차"  # 목차 상단에 표시될 제목입니다. (생략 가능)
+author_profile: true
+---
+
+
+
+
 # 🛵 배달길 앱 사용자 메뉴얼
 
 > **배달커뮤니티의 최강자가 되자!**  

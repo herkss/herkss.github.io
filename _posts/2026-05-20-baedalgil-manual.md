@@ -62,7 +62,7 @@ author_profile: true
 
 앱 실행 시 첫 화면에 로그인 폼이 표시됩니다.
 
-![로그인 화면](assets/image/man/0.jpg)
+![로그인 화면]({{ '/assets/image/man/0.jpg' | relative_url }})
 
 ### 로그인 방법
 

@@ -109,8 +109,10 @@ author_profile: true
 - 저장한 메모를 지도상에서 마커로 표시
 - 마커를 클릭하면 주소와 메모표시
 - Reverse Deocoding  호출 과금 문제로 최대 100개 제한
-![홈 화면 다크 모드](/assets/image/man/4-1.jpg)
-![홈 화면 다크 모드](/assets/image/man/4-2.jpg)
+### 좌측 위치메모버튼
+![좌측 위치메모버튼](/assets/image/man/4-1.jpg)
+### 좌측 메모추가해서 저장
+![좌측 위치메모버튼 저장](/assets/image/man/4-2.jpg)
 
 
 ### 우측 필터 버튼

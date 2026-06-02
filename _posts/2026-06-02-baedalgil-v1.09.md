@@ -29,7 +29,7 @@ author_profile: true
 > **지원 OS**: Android 8.0 이상  
 > **개발**: Flutter + Supabase + Firebase(Auth,store) +
 >           KakaoApi + Naver Map . . . .
-> 개발환경 : Ubuntu 24.04 
+> **개발환경** : Ubuntu 24.04 
 
 ---
 

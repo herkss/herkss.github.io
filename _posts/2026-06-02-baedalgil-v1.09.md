@@ -27,7 +27,9 @@ author_profile: true
 > **버전**: 1.0.8+9  
 > **최종 업데이트**: 2026년 6월  
 > **지원 OS**: Android 8.0 이상  
-> **개발**: Flutter + Supabase
+> **개발**: Flutter + Supabase + Firebase(Auth,store) +
+>           KakaoApi + Naver Map . . . .
+> 개발환경 : Ubuntu 24.04 
 
 ---
 

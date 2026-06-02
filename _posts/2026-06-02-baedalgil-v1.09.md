@@ -1,3 +1,27 @@
+---
+title: "배달길 매뉴얼 V 1.9"
+excerpt: "배달커뮤니티의 최강자가되자! "
+categories:
+  - apps
+layout: single  # 이 줄을 추가해 보세요
+tags:
+  - flutter
+  - android
+  - 배달
+  - 커뮤니티
+  - 위치공유
+  - 공유채팅
+  - 배달길 매뉴얼
+  - 위치메모
+
+
+author_profile: true
+---
+
+
+
+
+
 # 🛵 배달길2 통합 사용자 메뉴얼
 
 > **버전**: 1.0.8+9  

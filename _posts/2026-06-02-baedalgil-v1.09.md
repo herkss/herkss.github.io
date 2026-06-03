@@ -20,12 +20,13 @@ author_profile: true
 
 
 
-# 🛵 배달길2 통합 사용자 메뉴얼
+# 🛵 배달길 통합 사용자 메뉴얼
 
 > **버전**: 1.0.8+9  
 > **최종 업데이트**: 2026년 6월  
 > **지원 OS**: Android 8.0 이상  
 > **개발**: Flutter + Supabase
+> **개발**: NaverMap API +  KaKao API
 
 ---
 

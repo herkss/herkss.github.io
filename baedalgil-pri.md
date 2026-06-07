@@ -4,7 +4,7 @@ layout: single  # 이 줄을 추가해 보세요
 author_profile: true
 sidebar:
   nav: "docs"
-permalink: /baedalgil-privacy/
+permalink: /baedalgil-pri/
 ---
 
 # 개인정보처리방침

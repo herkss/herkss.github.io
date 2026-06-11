@@ -34,6 +34,7 @@ include:
   - assets
   - assets/image/man
   - assets/image
+  - app-ads.txt
 
 # 포스트 기본 설정 (오류 방지를 위해 정확한 인덴트 적용)
 defaults:

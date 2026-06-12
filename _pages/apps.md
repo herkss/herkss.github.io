@@ -1,7 +1,6 @@
 ---
-title: "App's"
-layout: single
-permalink: /apps/
+layout: categories
+title: "Apps"
+permalink: /categories/apps/
+taxonomy: apps
 ---
-
-앱 관련 내용

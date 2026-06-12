@@ -1,6 +1,6 @@
 ---
 title: "UserGuide"
-layout: single
+layout: category
 permalink: /userguide/
 ---
 

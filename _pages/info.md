@@ -1,7 +1,6 @@
 ---
 title: "Info"
-layout: single
+layout: category      
+taxonomy: info          
 permalink: /info/
 ---
-
-소개 페이지

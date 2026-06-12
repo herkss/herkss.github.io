@@ -1,7 +1,6 @@
 ---
 title: "UserGuide"
-layout: category
+layout: category      
+taxonomy: userguide          
 permalink: /userguide/
 ---
-
-사용법 안내

@@ -7,4 +7,7 @@ main:
   - title: "UserGuide"
     url: /userguide/
   - title: "Info"
-    url: /info/
+    url: /info/   
+  - title: "BLOCK"
+    url: /block_blitz_3d/
+

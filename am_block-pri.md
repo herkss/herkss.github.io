@@ -1,3 +1,12 @@
+---
+title: 개인정보처리방침
+layout: single  # 이 줄을 추가해 보세요
+author_profile: true
+sidebar:
+  nav: "docs"
+permalink: /am_block-pri/
+---
+
 # Block Blitz 3D — Privacy Policy / 개인정보처리방침
 
 > 🔒 **Block Blitz 3D does NOT collect any personal information. All game data is stored only on your device.**

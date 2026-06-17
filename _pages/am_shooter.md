@@ -1,5 +1,5 @@
 ---
 title: "Amazing Shooter"      
 taxonomy: block          
-permalink: /Am_Shooter/
+permalink: /am_shooter/
 ---

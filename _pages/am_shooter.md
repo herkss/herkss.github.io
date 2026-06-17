@@ -1,5 +1,5 @@
 ---
 title: "Amazing Shooter"      
-taxonomy: block          
+taxonomy: shooter       
 permalink: /am_shooter/
 ---

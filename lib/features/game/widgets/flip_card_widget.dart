@@ -1,0 +1,303 @@
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import '../models/card_model.dart';
+import '../../../core/constants/app_colors.dart';
+
+class FlipCardWidget extends StatefulWidget {
+  final CardModel card;
+  final VoidCallback? onTap;
+  final double size;
+  final int animationDelay;
+
+  const FlipCardWidget({
+    super.key,
+    required this.card,
+    required this.onTap,
+    required this.size,
+    this.animationDelay = 0,
+  });
+
+  @override
+  State<FlipCardWidget> createState() => _FlipCardWidgetState();
+}
+
+class _FlipCardWidgetState extends State<FlipCardWidget>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _flipCtrl;
+  late final Animation<double> _flipAnim;
+  bool _showFront = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _flipCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 480),
+    );
+    _flipAnim = CurvedAnimation(
+      parent: _flipCtrl,
+      curve: Curves.easeInOutCubic,
+    );
+
+    final isShowing = widget.card.isFlipped || widget.card.isMatched || widget.card.isHinted;
+    if (isShowing) {
+      _flipCtrl.value = 1.0;
+      _showFront = true;
+    }
+  }
+
+  @override
+  void didUpdateWidget(FlipCardWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final wasShowing = oldWidget.card.isFlipped || oldWidget.card.isMatched || oldWidget.card.isHinted;
+    final isShowing = widget.card.isFlipped || widget.card.isMatched || widget.card.isHinted;
+
+    if (isShowing && !wasShowing) {
+      _flipCtrl.forward();
+    } else if (!isShowing && wasShowing) {
+      _flipCtrl.reverse();
+    }
+  }
+
+  @override
+  void dispose() {
+    _flipCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final card = widget.card;
+    final canTap = !card.isMatched && !card.isFlipped && widget.onTap != null;
+
+    return GestureDetector(
+      onTap: canTap ? widget.onTap : null,
+      child: AnimatedBuilder(
+        animation: _flipAnim,
+        builder: (context, _) {
+          final angle = _flipAnim.value * pi;
+          final isFront = angle > pi / 2;
+          if (isFront != _showFront) _showFront = isFront;
+
+          return Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.0015)
+              ..rotateY(angle),
+            alignment: Alignment.center,
+            child: isFront
+                ? Transform(
+                    transform: Matrix4.identity()..rotateY(pi),
+                    alignment: Alignment.center,
+                    child: _CardFront(card: card, size: widget.size),
+                  )
+                : _CardBack(size: widget.size),
+          );
+        },
+      ),
+    )
+        .animate(delay: Duration(milliseconds: widget.animationDelay))
+        .scale(
+          begin: const Offset(0.0, 0.0),
+          end: const Offset(1.0, 1.0),
+          duration: 320.ms,
+          curve: Curves.elasticOut,
+        )
+        .fadeIn(duration: 200.ms);
+  }
+}
+
+class _CardBack extends StatelessWidget {
+  final double size;
+  const _CardBack({required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size * 1.3,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        gradient: AppColors.cardBackGradient,
+        border: Border.all(color: AppColors.primary.withOpacity(0.5), width: 1.5),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withOpacity(0.3),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Background pattern
+          CustomPaint(
+            size: Size(size, size * 1.3),
+            painter: _CardPatternPainter(),
+          ),
+          // Center logo
+          Container(
+            width: size * 0.44,
+            height: size * 0.44,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: AppColors.primaryGradient,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withOpacity(0.6),
+                  blurRadius: 12,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                '?',
+                style: TextStyle(
+                  fontSize: size * 0.22,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CardPatternPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = AppColors.primary.withOpacity(0.08)
+      ..strokeWidth = 1;
+
+    const spacing = 12.0;
+    for (double x = 0; x < size.width; x += spacing) {
+      for (double y = 0; y < size.height; y += spacing) {
+        canvas.drawCircle(Offset(x, y), 1.5, paint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _CardFront extends StatelessWidget {
+  final CardModel card;
+  final double size;
+
+  const _CardFront({required this.card, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    final gradients = AppColors.cardGradients;
+    final idx = card.content.gradientIndex % gradients.length;
+    final grad = gradients[idx];
+
+    Color borderColor = Colors.white.withOpacity(0.2);
+    List<BoxShadow> shadows = [
+      BoxShadow(
+        color: grad[0].withOpacity(0.4),
+        blurRadius: 10,
+        offset: const Offset(0, 4),
+      ),
+    ];
+
+    if (card.isMatched) {
+      borderColor = AppColors.cardMatched;
+      shadows = [
+        BoxShadow(
+          color: AppColors.cardMatched.withOpacity(0.6),
+          blurRadius: 16,
+          spreadRadius: 2,
+          offset: const Offset(0, 0),
+        ),
+      ];
+    } else if (card.isHinted) {
+      borderColor = AppColors.gold;
+      shadows = [
+        BoxShadow(
+          color: AppColors.gold.withOpacity(0.7),
+          blurRadius: 18,
+          spreadRadius: 3,
+        ),
+      ];
+    }
+
+    final child = Container(
+      width: size,
+      height: size * 1.3,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        gradient: card.content.solidColor != null
+            ? null
+            : LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: grad,
+              ),
+        color: card.content.solidColor,
+        border: Border.all(color: borderColor, width: 1.8),
+        boxShadow: shadows,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (card.isMatched)
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.15),
+                ),
+              ),
+            ),
+          Text(
+            card.content.display,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: card.content.isEmoji ? size * 0.42 : size * 0.38,
+              fontWeight: FontWeight.w900,
+              color: card.content.solidColor != null
+                  ? Colors.white
+                  : Colors.white,
+              shadows: [
+                Shadow(
+                  color: Colors.black.withOpacity(0.4),
+                  blurRadius: 4,
+                  offset: const Offset(1, 2),
+                ),
+              ],
+            ),
+          ),
+          if (card.isMatched) ...[
+            const SizedBox(height: 4),
+            const Icon(Icons.check_circle, color: Colors.white, size: 14),
+          ],
+        ],
+      ),
+    );
+
+    if (card.isMatched) {
+      return child.animate().scale(
+        begin: const Offset(1.0, 1.0),
+        end: const Offset(1.08, 1.08),
+        duration: 180.ms,
+        curve: Curves.easeOut,
+      ).then().scale(
+        begin: const Offset(1.08, 1.08),
+        end: const Offset(1.0, 1.0),
+        duration: 180.ms,
+        curve: Curves.easeIn,
+      );
+    }
+
+    return child;
+  }
+}

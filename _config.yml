@@ -7,12 +7,6 @@ baseurl: "" # 저장소 이름이 herkss.github.io이므로 빈값 유지
 remote_theme: "mmistakes/minimal-mistakes"
 minimal_mistakes_skin: "dirt" # 분석하신 skin 유지
 
-
-
-
-
-
-
 # 댓글 설정
 comments:
   provider: "disqus"
@@ -36,8 +30,9 @@ include:
   - assets/image
   - app-ads.txt
 
-# 포스트 기본 설정 (오류 방지를 위해 정확한 인덴트 적용)
+# 포스트 기본 설정
 defaults:
+  # 포스트 기본값
   - scope:
       path: ""
       type: posts
@@ -48,6 +43,15 @@ defaults:
       comments: true       # Disqus 댓글 활성화
       share: true
       related: true
-      # toc: true
-      # toc_sticky: true
-      # toc_label: "페이지 목차"
+      sidebar:
+        nav: "sidebar-menu"  # ← 포스트에 좌측 사이드바 메뉴 적용
+
+  # 페이지 기본값
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: false
+      sidebar:
+        nav: "sidebar-menu"  # ← 페이지에 좌측 사이드바 메뉴 적용

@@ -3,6 +3,9 @@ title: "🎮 Block Blitz 3D"
 layout: single
 permalink: /block/
 author_profile: false
+
+sidebar:
+  nav: "sidebar-menu"
 ---
 
 <style>

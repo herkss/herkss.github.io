@@ -3,4 +3,6 @@ title: "UserGuide"
 layout: category      
 taxonomy: userguide          
 permalink: /userguide/
+sidebar:
+  nav: "sidebar-menu"
 ---

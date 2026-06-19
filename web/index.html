@@ -1,46 +1,408 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Memory Card - 메모리 카드 매칭 게임 | 10레벨 × 100스테이지">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="memory_card">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Memory Card">
+  <meta name="theme-color" content="#1a0533">
+  <meta property="og:title" content="Memory Card - 메모리 카드 게임">
+  <meta property="og:description" content="10레벨 × 10스테이지 메모리 카드 매칭 게임">
+  <meta property="og:image" content="icons/Icon-512.png">
+
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>memory_card</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Memory Card - 메모리 카드 게임</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: -apple-system, 'SF Pro Display', Arial, sans-serif;
+    }
+
+    /* ────────────────────────────────────────
+       모바일: 전체 화면
+    ──────────────────────────────────────── */
+    @media (max-width: 767px) {
+      body { background: #1a0533; }
+
+      .bg-scene { display: none; }
+
+      .phone-wrap {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .phone-device {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        padding: 0;
+        background: transparent;
+        position: relative;
+      }
+
+      .phone-chrome { display: none; }
+
+      .phone-screen {
+        border-radius: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+
+    /* ────────────────────────────────────────
+       데스크탑: 스마트폰 프레임
+    ──────────────────────────────────────── */
+    @media (min-width: 768px) {
+      body {
+        background: radial-gradient(ellipse at 30% 40%, #2a0a4a 0%, #110022 45%, #06000f 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      /* 배경 별 & 파티클 */
+      .bg-scene {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .bg-scene::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+          radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+          radial-gradient(1px 1px at 25% 72%, rgba(255,255,255,0.5) 0%, transparent 100%),
+          radial-gradient(1.5px 1.5px at 42% 8%, rgba(255,255,255,0.9) 0%, transparent 100%),
+          radial-gradient(1px 1px at 60% 55%, rgba(255,255,255,0.6) 0%, transparent 100%),
+          radial-gradient(1.5px 1.5px at 75% 20%, rgba(255,255,255,0.7) 0%, transparent 100%),
+          radial-gradient(1px 1px at 88% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+          radial-gradient(1px 1px at 5% 90%, rgba(255,255,255,0.6) 0%, transparent 100%),
+          radial-gradient(1.5px 1.5px at 33% 42%, rgba(255,255,255,0.4) 0%, transparent 100%),
+          radial-gradient(1px 1px at 92% 35%, rgba(255,255,255,0.7) 0%, transparent 100%),
+          radial-gradient(2px 2px at 18% 60%, rgba(255,215,0,0.5) 0%, transparent 100%),
+          radial-gradient(1.5px 1.5px at 65% 88%, rgba(255,215,0,0.4) 0%, transparent 100%),
+          radial-gradient(2px 2px at 82% 10%, rgba(200,100,255,0.5) 0%, transparent 100%),
+          radial-gradient(1px 1px at 50% 30%, rgba(255,255,255,0.8) 0%, transparent 100%),
+          radial-gradient(1px 1px at 70% 65%, rgba(255,255,255,0.5) 0%, transparent 100%),
+          radial-gradient(1.5px 1.5px at 15% 40%, rgba(255,255,255,0.6) 0%, transparent 100%);
+      }
+
+      /* 폰 주변 오로라 글로우 */
+      .bg-scene::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        height: 1000px;
+        background: radial-gradient(ellipse, rgba(100,20,200,0.25) 0%, rgba(60,0,120,0.1) 40%, transparent 70%);
+        filter: blur(30px);
+      }
+
+      /* 폰 래퍼 (스케일 조정용) */
+      .phone-wrap {
+        position: relative;
+        z-index: 1;
+        transform-origin: center center;
+        filter:
+          drop-shadow(0 0 30px rgba(130,40,230,0.7))
+          drop-shadow(0 0 70px rgba(80,0,160,0.4))
+          drop-shadow(0 20px 60px rgba(0,0,0,0.8));
+      }
+
+      /* 폰 본체 */
+      .phone-device {
+        position: relative;
+        width: 400px;
+        height: 880px;
+        border-radius: 54px;
+        background: linear-gradient(160deg, #323232 0%, #181818 30%, #1e1e1e 70%, #282828 100%);
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,0.12),
+          0 0 0 2px #2a2a2a,
+          0 0 0 3.5px #3a3a3a,
+          0 0 0 4.5px #252525,
+          inset 0 1px 0 rgba(255,255,255,0.15),
+          inset 0 -2px 0 rgba(0,0,0,0.6),
+          20px 40px 100px rgba(0,0,0,0.9),
+          -5px 10px 40px rgba(0,0,0,0.5);
+        padding: 58px 13px 42px;
+      }
+
+      /* Dynamic Island (카메라) */
+      .phone-dynamic-island {
+        position: absolute;
+        top: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 34px;
+        background: #000;
+        border-radius: 20px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 14px;
+      }
+      .phone-dynamic-island::after {
+        content: '';
+        width: 11px;
+        height: 11px;
+        background: radial-gradient(circle at 35% 35%, #2a2a4a, #0a0a1a);
+        border-radius: 50%;
+        border: 1.5px solid #333;
+        box-shadow: inset 0 0 3px rgba(100,120,255,0.4);
+      }
+
+      /* 우측 전원 버튼 */
+      .phone-btn-power {
+        position: absolute;
+        right: -4.5px;
+        top: 196px;
+        width: 4px;
+        height: 82px;
+        background: linear-gradient(90deg, #2a2a2a, #585858 30%, #6a6a6a 50%, #585858 70%, #2a2a2a);
+        border-radius: 0 3px 3px 0;
+      }
+
+      /* 좌측 무음 스위치 */
+      .phone-btn-mute {
+        position: absolute;
+        left: -4.5px;
+        top: 152px;
+        width: 4px;
+        height: 34px;
+        background: linear-gradient(270deg, #2a2a2a, #585858 30%, #6a6a6a 50%, #585858 70%, #2a2a2a);
+        border-radius: 3px 0 0 3px;
+      }
+
+      /* 좌측 볼륨 업 */
+      .phone-btn-vol-up {
+        position: absolute;
+        left: -4.5px;
+        top: 204px;
+        width: 4px;
+        height: 68px;
+        background: linear-gradient(270deg, #2a2a2a, #585858 30%, #6a6a6a 50%, #585858 70%, #2a2a2a);
+        border-radius: 3px 0 0 3px;
+      }
+
+      /* 좌측 볼륨 다운 */
+      .phone-btn-vol-down {
+        position: absolute;
+        left: -4.5px;
+        top: 284px;
+        width: 4px;
+        height: 68px;
+        background: linear-gradient(270deg, #2a2a2a, #585858 30%, #6a6a6a 50%, #585858 70%, #2a2a2a);
+        border-radius: 3px 0 0 3px;
+      }
+
+      /* 하단 홈 인디케이터 */
+      .phone-home-bar {
+        position: absolute;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 128px;
+        height: 5px;
+        background: rgba(255,255,255,0.32);
+        border-radius: 3px;
+      }
+
+      .phone-screen {
+        border-radius: 42px !important;
+      }
+    }
+
+    /* 스크린 공통 */
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+
+    /* Flutter 렌더링 타겟 */
+    #flutter_target {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ────────────────────────────────────────
+       로딩 화면
+    ──────────────────────────────────────── */
+    #loading-screen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #1a0533 0%, #3d1270 55%, #5a0891 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      gap: 20px;
+      transition: opacity 0.6s ease;
+      border-radius: inherit;
+    }
+
+    #loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .ld-icon {
+      width: 88px;
+      height: 88px;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 24px rgba(180,60,255,0.5);
+      animation: ld-pulse 2s ease-in-out infinite;
+    }
+
+    .ld-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes ld-pulse {
+      0%, 100% { transform: scale(1);    box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 24px rgba(180,60,255,0.5); }
+      50%       { transform: scale(1.04); box-shadow: 0 8px 40px rgba(0,0,0,0.7), 0 0 40px rgba(200,80,255,0.7); }
+    }
+
+    .ld-title {
+      color: #FFD700;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-shadow: 0 0 20px rgba(255,215,0,0.7), 0 0 40px rgba(255,215,0,0.3);
+    }
+
+    .ld-bar-wrap {
+      width: 150px;
+      height: 3px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .ld-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #9333ea, #c084fc, #FFD700);
+      border-radius: 2px;
+      animation: ld-progress 1.8s ease-in-out infinite;
+    }
+
+    @keyframes ld-progress {
+      0%   { width: 0%;  margin-left: 0%; }
+      60%  { width: 65%; margin-left: 18%; }
+      100% { width: 0%;  margin-left: 100%; }
+    }
+
+    .ld-sub {
+      color: rgba(255,255,255,0.4);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+  <!-- 배경 별 씬 (데스크탑) -->
+  <div class="bg-scene"></div>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <!-- 스마트폰 프레임 -->
+  <div class="phone-wrap" id="phone-wrap">
+    <div class="phone-device" id="phone-device">
+
+      <!-- 폰 크롬 요소 (데스크탑만 표시) -->
+      <div class="phone-chrome">
+        <div class="phone-dynamic-island"></div>
+        <div class="phone-btn-power"></div>
+        <div class="phone-btn-mute"></div>
+        <div class="phone-btn-vol-up"></div>
+        <div class="phone-btn-vol-down"></div>
+        <div class="phone-home-bar"></div>
+      </div>
+
+      <!-- 스크린 -->
+      <div class="phone-screen" id="phone-screen">
+        <!-- 로딩 화면 -->
+        <div id="loading-screen">
+          <div class="ld-icon">
+            <img src="icons/Icon-192.png" alt="Memory Card">
+          </div>
+          <div class="ld-title">MEMORY CARD</div>
+          <div class="ld-bar-wrap"><div class="ld-bar"></div></div>
+          <div class="ld-sub">Loading...</div>
+        </div>
+
+        <!-- Flutter 렌더링 영역 -->
+        <div id="flutter_target"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var isDesktop = window.innerWidth >= 768;
+
+      // 데스크탑: 폰 크롬 요소를 phone-device 직속으로 이동
+      if (isDesktop) {
+        var chrome = document.querySelector('.phone-chrome');
+        var device = document.getElementById('phone-device');
+        if (chrome && device) {
+          while (chrome.firstChild) {
+            device.insertBefore(chrome.firstChild, chrome);
+          }
+          chrome.remove();
+        }
+      }
+
+      // 뷰포트에 맞게 폰 크기 자동 조절
+      function scalePhone() {
+        if (window.innerWidth < 768) return;
+        var wrap = document.getElementById('phone-wrap');
+        if (!wrap) return;
+        var scaleH = (window.innerHeight * 0.96) / 880;
+        var scaleW = (window.innerWidth * 0.85) / 400;
+        var scale = Math.min(1, scaleH, scaleW);
+        wrap.style.transform = 'scale(' + scale + ')';
+      }
+
+      scalePhone();
+      window.addEventListener('resize', scalePhone);
+    })();
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

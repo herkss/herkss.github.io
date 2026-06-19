@@ -1,7 +1,8 @@
 ---
-title: "Amazing Shooter"      
-taxonomy: shooter       
-permalink: /am_shooter/
+title: "🚀 AM Shooter"
+layout: single
+permalink: /shooter/
+author_profile: false
 
 sidebar:
   nav: "sidebar-menu"

@@ -1,4 +1,4 @@
-# _data/navigation.yml
+# 상단 네비게이션 바
 main:
   - title: "Home"
     url: /
@@ -12,3 +12,39 @@ main:
     url: /block/
   - title: "🎮 Am Shooter"
     url: /shooter/
+
+# 좌측 사이드바 메뉴
+sidebar-menu:
+  - title: "📱 앱 소개"
+    children:
+      - title: "전체 앱 목록"
+        url: /apps/
+      - title: "배달길2"
+        url: /baedalgil/
+      - title: "Amazing Game"
+        url: /apps/
+      - title: "PDF & Viewer"
+        url: /apps/
+
+  - title: "🎮 미니게임"
+    children:
+      - title: "AM Shooter"
+        url: /shooter/
+      - title: "Block Game"
+        url: /block/
+      - title: "Block Blitz 3D"
+        url: /block-blitz-3d/
+
+  - title: "📖 사용 가이드"
+    children:
+      - title: "배달길2 사용법"
+        url: /userguide/
+      - title: "앱 업데이트 내역"
+        url: /posts/
+
+  - title: "ℹ️ 정보"
+    children:
+      - title: "개발자 소개"
+        url: /info/
+      - title: "문의하기"
+        url: /info/

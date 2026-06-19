@@ -7,16 +7,18 @@ layout: compress
   {% include head.html %}
   <link rel="shortcut icon" href="{{ '/assets/favicon.png' | relative_url }}">
   <style>
-    /* ===== 좌측 고정 사이드바 레이아웃 ===== */
-    html, body { height: 100%; }
+    /* ===== 좌측 고정 사이드바 ===== */
 
-    /* 사이드바 + 콘텐츠 전체 래퍼 */
-    #site-wrapper {
-      display: flex;
-      min-height: 100vh;
-    }
+    /* Minimal Mistakes 기본 사이드바 완전 제거 */
+    .sidebar, .sidebar__right, .page__related .sidebar,
+    nav.nav__list, .nav__list, .toc,
+    aside.sidebar { display: none !important; }
 
-    /* ── 좌측 고정 사이드바 ── */
+    /* 콘텐츠가 사이드바 없이 전체 너비 사용 */
+    .page, .page__inner-wrap { float: none !important; width: 100% !important; }
+    .page__content { width: 100% !important; padding-right: 0 !important; }
+
+    /* ── 남색 고정 사이드바 ── */
     #fixed-sidebar {
       position: fixed;
       top: 0;
@@ -31,15 +33,15 @@ layout: compress
       flex-direction: column;
       padding-top: 10px;
       border-right: 2px solid #f5a623;
+      /* transform만으로 접기 - transition 포함 */
+      transform: translateX(0);
       transition: transform 0.25s ease;
     }
 
-    /* 사이드바 숨김 상태 */
     #fixed-sidebar.collapsed {
       transform: translateX(-210px);
     }
 
-    /* 로고/홈 링크 */
     #fixed-sidebar .sb-logo {
       display: block;
       padding: 12px 16px 14px;
@@ -49,10 +51,8 @@ layout: compress
       text-decoration: none;
       border-bottom: 1px solid #2d2d4e;
       margin-bottom: 6px;
-      letter-spacing: 0.3px;
     }
 
-    /* 카테고리 헤더 */
     #fixed-sidebar .sb-cat {
       font-size: 0.65rem;
       font-weight: 700;
@@ -62,7 +62,6 @@ layout: compress
       padding: 12px 16px 3px;
     }
 
-    /* 메뉴 링크 */
     #fixed-sidebar a.sb-link {
       display: flex;
       align-items: center;
@@ -80,7 +79,6 @@ layout: compress
       border-left-color: #f5a623;
     }
 
-    /* 현재 페이지 강조 */
     #fixed-sidebar a.sb-link.active {
       background: #252545;
       color: #f5a623;
@@ -88,12 +86,12 @@ layout: compress
       font-weight: 600;
     }
 
-    /* ── 사이드바 토글 버튼 ── */
+    /* ── 토글 버튼: transform 없이 left만 사용 ── */
     #sb-toggle {
       position: fixed;
-      top: 50%;
-      left: 210px;
-      transform: translateY(-50%);
+      top: 50vh;
+      left: 210px;       /* JS에서 이 값만 바꿈 */
+      margin-top: -24px; /* height 48px의 절반 */
       z-index: 10000;
       background: #1a1a2e;
       border: 2px solid #f5a623;
@@ -112,36 +110,18 @@ layout: compress
       line-height: 1;
     }
 
-    #sb-toggle.collapsed {
-      left: 0;
-    }
-
-    /* ── 메인 콘텐츠 영역 ── */
+    /* ── 메인 콘텐츠: 사이드바 너비만큼 오른쪽으로 ── */
     #main-content-wrap {
       margin-left: 210px;
-      flex: 1;
-      min-width: 0;
       transition: margin-left 0.25s ease;
+      min-width: 0;
     }
 
-    #main-content-wrap.expanded {
-      margin-left: 0;
-    }
-
-    /* masthead가 사이드바 오른쪽부터 시작 */
-    .masthead {
-      margin-left: 0;
-    }
-
-    /* ── 모바일: 기본적으로 접힘 ── */
+    /* ── 모바일 ── */
     @media (max-width: 900px) {
       #fixed-sidebar { transform: translateX(-210px); }
-      #fixed-sidebar.collapsed { transform: translateX(-210px); }
-      #fixed-sidebar.mobile-open { transform: translateX(0); }
-      #sb-toggle { left: 0; }
-      #sb-toggle.mobile-open { left: 210px; }
-      #main-content-wrap { margin-left: 0; }
-      #main-content-wrap.expanded { margin-left: 0; }
+      #sb-toggle { left: 0 !important; }
+      #main-content-wrap { margin-left: 0 !important; }
     }
   </style>
 </head>
@@ -149,7 +129,7 @@ layout: compress
 <body class="layout--{{ page.layout | default: layout.layout }}">
   {% include skip-links.html %}
 
-  <!-- ★ 좌측 고정 사이드바 -->
+  <!-- 남색 좌측 고정 사이드바 -->
   <nav id="fixed-sidebar">
     <a class="sb-logo" href="/">🏠 허갱소프트</a>
 
@@ -172,10 +152,10 @@ layout: compress
     <a class="sb-link" href="/info/">개발자 소개</a>
   </nav>
 
-  <!-- 사이드바 토글 버튼 -->
+  <!-- 토글 버튼 -->
   <button id="sb-toggle" title="메뉴 열기/닫기">◀</button>
 
-  <!-- 메인 콘텐츠 (사이드바 오른쪽) -->
+  <!-- 메인 콘텐츠 -->
   <div id="main-content-wrap">
     {% include masthead.html %}
     <div class="initial-content">
@@ -189,7 +169,7 @@ layout: compress
   {% include scripts.html %}
 
   <script>
-    // ── 현재 페이지 active 표시 ──
+    /* 현재 페이지 active */
     (function() {
       var path = window.location.pathname;
       document.querySelectorAll('#fixed-sidebar a.sb-link').forEach(function(a) {
@@ -202,59 +182,46 @@ layout: compress
       });
     })();
 
-    // ── 사이드바 토글 ──
+    /* 토글 */
     (function() {
       var sidebar = document.getElementById('fixed-sidebar');
-      var toggle  = document.getElementById('sb-toggle');
-      var content = document.getElementById('main-content-wrap');
-      var isMobile = window.innerWidth <= 900;
-      var open = !isMobile; // 데스크탑: 기본 열림, 모바일: 기본 닫힘
+      var btn     = document.getElementById('sb-toggle');
+      var wrap    = document.getElementById('main-content-wrap');
+      var isOpen  = window.innerWidth > 900;
 
-      function setState(isOpen) {
-        open = isOpen;
-        if (isMobile) {
-          sidebar.classList.toggle('mobile-open', isOpen);
-          toggle.classList.toggle('mobile-open', isOpen);
+      function apply() {
+        if (isOpen) {
+          sidebar.classList.remove('collapsed');
+          btn.style.left = '210px';
+          btn.textContent = '◀';
+          wrap.style.marginLeft = '210px';
         } else {
-          sidebar.classList.toggle('collapsed', !isOpen);
-          toggle.classList.toggle('collapsed', !isOpen);
-          content.classList.toggle('expanded', !isOpen);
+          sidebar.classList.add('collapsed');
+          btn.style.left = '0px';
+          btn.textContent = '▶';
+          wrap.style.marginLeft = '0px';
         }
-        toggle.textContent = isOpen ? '◀' : '▶';
       }
 
-      toggle.addEventListener('click', function() { setState(!open); });
-
-      window.addEventListener('resize', function() {
-        isMobile = window.innerWidth <= 900;
-        setState(isMobile ? false : true);
+      btn.addEventListener('click', function() {
+        isOpen = !isOpen;
+        apply();
       });
 
-      setState(open);
+      apply();
     })();
 
-    // ── Chatbase ──
+    /* Chatbase */
     (function() {
       if (!window.chatbase || window.chatbase("getState") !== "initialized") {
-        window.chatbase = (...arguments) => {
-          if (!window.chatbase.q) window.chatbase.q = [];
-          window.chatbase.q.push(arguments);
-        };
-        window.chatbase = new Proxy(window.chatbase, {
-          get(target, prop) {
-            return prop === "q" ? target.q : (...args) => target(prop, ...args);
-          }
-        });
+        window.chatbase = (...a) => { (window.chatbase.q = window.chatbase.q||[]).push(a); };
+        window.chatbase = new Proxy(window.chatbase, { get(t,p){ return p==="q"?t.q:(...a)=>t(p,...a); } });
       }
-      const onLoad = function() {
-        const script = document.createElement("script");
-        script.src = "https://www.chatbase.co/embed.min.js";
-        script.id = "N1_ZF-X9asHvxXXlMJMdI";
-        script.domain = "www.chatbase.co";
-        document.body.appendChild(script);
-      };
-      if (document.readyState === "complete") { onLoad(); }
-      else { window.addEventListener("load", onLoad); }
+      var s = document.createElement("script");
+      s.src = "https://www.chatbase.co/embed.min.js";
+      s.id = "N1_ZF-X9asHvxXXlMJMdI";
+      s.domain = "www.chatbase.co";
+      document.body.appendChild(s);
     })();
   </script>
 </body>

@@ -4,8 +4,6 @@ layout: single
 permalink: /shooter/
 author_profile: false
 
-sidebar:
-  nav: "sidebar-menu"
 ---
 
 <style>

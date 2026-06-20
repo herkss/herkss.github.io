@@ -37,7 +37,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
-          # 커밋 메시지
+          destination_dir: memory_card
           commit_message: "Deploy: ${{ github.sha }}"
-          # 404 처리 (SPA 라우팅용)
           enable_jekyll: false

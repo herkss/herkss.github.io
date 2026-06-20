@@ -12,6 +12,8 @@ main:
     url: /block/
   - title: "🎮 Am Shooter"
     url: /shooter/
+      - title: "🎮 Memoru Card"
+    url: /memory/
 
 # 좌측 사이드바 메뉴
 sidebar-menu:
@@ -32,6 +34,8 @@ sidebar-menu:
         url: /shooter/
       - title: "Block Game"
         url: /block/
+      - title: "Memory Card
+        url: /memory/
 
 
   - title: "📖 사용 가이드"

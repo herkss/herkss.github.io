@@ -30,7 +30,7 @@ jobs:
       - name: Build Web
         # 리포지토리 이름이 memory_card 인 경우 base-href = /memory_card/
         # 리포지토리 이름이 다르다면 아래 값을 수정하세요
-        run: flutter build web --release --base-href /${{ github.event.repository.name }}/
+        run: flutter build web --release --base-href /memory_card/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

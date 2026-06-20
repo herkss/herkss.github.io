@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import '../providers/game_provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/services/audio_service.dart';
@@ -82,58 +81,134 @@ class _ScoreBlock extends StatefulWidget {
   State<_ScoreBlock> createState() => _ScoreBlockState();
 }
 
-class _ScoreBlockState extends State<_ScoreBlock> {
-  int _prev = 0;
+class _ScoreBlockState extends State<_ScoreBlock>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+  late final Animation<double> _scale;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
+    _scale = Tween<double>(begin: 1.3, end: 1.0).animate(
+      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
+    );
+    _ctrl.value = 1.0;
+  }
 
   @override
   void didUpdateWidget(_ScoreBlock old) {
     super.didUpdateWidget(old);
-    _prev = old.score;
+    if (old.score != widget.score) {
+      _ctrl.forward(from: 0.0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final changed = widget.score != _prev;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('점수', style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
-        Text(
-          '${widget.score}',
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w900,
-            color: AppColors.gold,
+        Text('점수',
+            style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+        AnimatedBuilder(
+          animation: _scale,
+          builder: (_, child) =>
+              Transform.scale(scale: _scale.value, child: child),
+          child: Text(
+            '${widget.score}',
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w900,
+              color: AppColors.gold,
+            ),
           ),
-        ).animate(key: ValueKey(widget.score), target: changed ? 1 : 0)
-            .scale(begin: const Offset(1.3, 1.3), end: const Offset(1, 1), duration: 250.ms),
+        ),
       ],
     );
   }
 }
 
-class _ComboBlock extends StatelessWidget {
+class _ComboBlock extends StatefulWidget {
   final int combo;
   const _ComboBlock({required this.combo});
 
   @override
+  State<_ComboBlock> createState() => _ComboBlockState();
+}
+
+class _ComboBlockState extends State<_ComboBlock>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+  late final Animation<double> _scale;
+  late final Animation<double> _opacity;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _scale = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: _ctrl, curve: Curves.elasticOut),
+    );
+    _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _ctrl,
+        curve: const Interval(0.0, 0.75, curve: Curves.easeIn),
+      ),
+    );
+    if (widget.combo >= 2) _ctrl.value = 1.0;
+  }
+
+  @override
+  void didUpdateWidget(_ComboBlock old) {
+    super.didUpdateWidget(old);
+    if (widget.combo >= 2 && widget.combo != old.combo) {
+      _ctrl.forward(from: 0.0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (combo < 2) return const SizedBox(width: 50);
+    if (widget.combo < 2) return const SizedBox(width: 50);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('콤보', style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
-        Text(
-          '×$combo',
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w900,
-            color: AppColors.accent,
+        Text('콤보',
+            style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+        AnimatedBuilder(
+          animation: _ctrl,
+          builder: (_, child) => Opacity(
+            opacity: _opacity.value,
+            child: Transform.scale(scale: _scale.value, child: child),
           ),
-        ).animate(key: ValueKey(combo))
-            .scale(begin: const Offset(0.5, 0.5), end: const Offset(1, 1), duration: 200.ms, curve: Curves.elasticOut)
-            .fadeIn(duration: 150.ms),
+          child: Text(
+            '×${widget.combo}',
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w900,
+              color: AppColors.accent,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -159,25 +234,20 @@ class _TimerBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLow = ratio <= 0.25;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('시간', style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
-        Text(
-          _formatted,
+        Text('시간',
+            style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+        AnimatedDefaultTextStyle(
+          duration: const Duration(milliseconds: 200),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w900,
             color: _color,
             fontFamily: 'monospace',
           ),
-        ).animate(
-          key: ValueKey(isLow),
-          onPlay: (c) => isLow ? c.repeat() : c.stop(),
-        ).shimmer(
-          duration: 700.ms,
-          color: isLow ? AppColors.timerDanger.withOpacity(0.6) : Colors.transparent,
+          child: Text(_formatted),
         ),
       ],
     );
@@ -195,7 +265,8 @@ class _PairsBlock extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('매칭', style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+        Text('매칭',
+            style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
         Text(
           '$matched/$total',
           style: const TextStyle(
@@ -264,9 +335,14 @@ class _ItemButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           gradient: active
               ? AppColors.primaryGradient
-              : const LinearGradient(colors: [Color(0xFF2A2550), Color(0xFF2A2550)]),
+              : const LinearGradient(
+                  colors: [Color(0xFF2A2550), Color(0xFF2A2550)]),
           boxShadow: active
-              ? [BoxShadow(color: AppColors.primary.withOpacity(0.4), blurRadius: 10)]
+              ? [
+                  BoxShadow(
+                      color: AppColors.primary.withOpacity(0.4),
+                      blurRadius: 10)
+                ]
               : [],
         ),
         child: Row(
@@ -284,9 +360,12 @@ class _ItemButton extends StatelessWidget {
             ),
             const SizedBox(width: 4),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
               decoration: BoxDecoration(
-                color: active ? Colors.white.withOpacity(0.3) : AppColors.surface,
+                color: active
+                    ? Colors.white.withOpacity(0.3)
+                    : AppColors.surface,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(

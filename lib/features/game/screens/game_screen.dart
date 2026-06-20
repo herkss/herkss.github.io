@@ -20,6 +20,8 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  bool _navigating = false;
+
   @override
   void initState() {
     super.initState();
@@ -28,24 +30,26 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
+  void _goToResult(BuildContext context) {
+    if (_navigating || !mounted) return;
+    _navigating = true;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ResultScreen(
+          level: widget.level,
+          stage: widget.stage,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GameProvider>(
       builder: (context, gp, _) {
         if (gp.gameState == GameState.won || gp.gameState == GameState.lost) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (mounted && (gp.gameState == GameState.won || gp.gameState == GameState.lost)) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => ResultScreen(
-                    level: widget.level,
-                    stage: widget.stage,
-                  ),
-                ),
-              );
-            }
-          });
+          WidgetsBinding.instance.addPostFrameCallback((_) => _goToResult(context));
         }
 
         final config = gp.levelConfig;

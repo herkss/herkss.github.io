@@ -273,20 +273,6 @@ class _CardFront extends StatelessWidget {
       ),
     );
 
-    if (card.isMatched) {
-      return child.animate().scale(
-        begin: const Offset(1.0, 1.0),
-        end: const Offset(1.08, 1.08),
-        duration: 180.ms,
-        curve: Curves.easeOut,
-      ).then().scale(
-        begin: const Offset(1.08, 1.08),
-        end: const Offset(1.0, 1.0),
-        duration: 180.ms,
-        curve: Curves.easeIn,
-      );
-    }
-
     return child;
   }
 }

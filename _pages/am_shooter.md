@@ -1,6 +1,6 @@
 ---
-title: "Amazing Shooter"      
-taxonomy: shooter       
-permalink: /am_shooter/
+title: "Memory card "      
+taxonomy: memory   
+permalink: /memory_card/
 
 ---

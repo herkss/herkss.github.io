@@ -13,7 +13,7 @@ main:
   - title: "🎮 Am Shooter"
     url: /shooter/
       - title: "🎮 Memoru Card"
-    url: /memory/
+    url: /memory_card/
 
 # 좌측 사이드바 메뉴
 sidebar-menu:

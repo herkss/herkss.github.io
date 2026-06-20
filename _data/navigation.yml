@@ -35,7 +35,7 @@ sidebar-menu:
       - title: "Block Game"
         url: /block/
       - title: "Memory Card
-        url: /memory_card/
+        url: /memory_card/ 
 
 
   - title: "📖 사용 가이드"

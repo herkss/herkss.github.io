@@ -1,6 +1,6 @@
 ---
 title: "Memory card "      
-taxonomy: memory   
+taxonomy: memory_card  
 permalink: /memory_card/
 
 ---

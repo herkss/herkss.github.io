@@ -29,6 +29,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
   late final Animation<double> _entryScale;
   late final Animation<double> _entryOpacity;
   bool _showFront = false;
+  bool _entryDone = false;
 
   @override
   void initState() {
@@ -46,18 +47,25 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
       _showFront = true;
     }
 
-    // 등장 애니메이션 — 한 번만 실행, rebuild 시 재시작 없음
     _entryCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 320),
     );
-    _entryScale = CurvedAnimation(parent: _entryCtrl, curve: Curves.elasticOut);
+    _entryScale = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _entryCtrl, curve: Curves.elasticOut),
+    );
     _entryOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _entryCtrl,
         curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
       ),
     );
+
+    _entryCtrl.addStatusListener((status) {
+      if (status == AnimationStatus.completed && mounted) {
+        setState(() => _entryDone = true);
+      }
+    });
 
     if (widget.animationDelay > 0) {
       Future.delayed(Duration(milliseconds: widget.animationDelay), () {
@@ -76,6 +84,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     final isShowing = widget.card.isFlipped || widget.card.isMatched || widget.card.isHinted;
 
     if (isShowing && !wasShowing) {
+      _showFront = false;
       _flipCtrl.forward();
     } else if (!isShowing && wasShowing) {
       _flipCtrl.reverse();
@@ -89,45 +98,58 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     super.dispose();
   }
 
+  Widget _buildFlipContent(CardModel card) {
+    // If flip is fully complete, skip the 3D transform — no compositing layer
+    if (_flipCtrl.isCompleted) {
+      return _CardFront(card: card, size: widget.size);
+    }
+    if (_flipCtrl.isDismissed) {
+      return _CardBack(size: widget.size);
+    }
+    // During the flip animation, use 3D transform
+    return AnimatedBuilder(
+      animation: _flipAnim,
+      builder: (context, _) {
+        final angle = _flipAnim.value * pi;
+        final isFront = angle > pi / 2;
+        if (isFront != _showFront) _showFront = isFront;
+        return Transform(
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.0015)
+            ..rotateY(angle),
+          alignment: Alignment.center,
+          child: isFront
+              ? Transform(
+                  transform: Matrix4.identity()..rotateY(pi),
+                  alignment: Alignment.center,
+                  child: _CardFront(card: card, size: widget.size),
+                )
+              : _CardBack(size: widget.size),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final card = widget.card;
     final canTap = !card.isMatched && !card.isFlipped && widget.onTap != null;
+    final flipContent = _buildFlipContent(card);
+    final tappable = GestureDetector(
+      onTap: canTap ? widget.onTap : null,
+      child: flipContent,
+    );
+
+    // Once entry animation is done, skip the Opacity/Scale wrapper
+    if (_entryDone) return tappable;
 
     return AnimatedBuilder(
       animation: _entryCtrl,
       builder: (context, child) => Opacity(
         opacity: _entryOpacity.value,
-        child: Transform.scale(
-          scale: _entryScale.value,
-          child: child,
-        ),
+        child: Transform.scale(scale: _entryScale.value, child: child),
       ),
-      child: GestureDetector(
-        onTap: canTap ? widget.onTap : null,
-        child: AnimatedBuilder(
-          animation: _flipAnim,
-          builder: (context, _) {
-            final angle = _flipAnim.value * pi;
-            final isFront = angle > pi / 2;
-            if (isFront != _showFront) _showFront = isFront;
-
-            return Transform(
-              transform: Matrix4.identity()
-                ..setEntry(3, 2, 0.0015)
-                ..rotateY(angle),
-              alignment: Alignment.center,
-              child: isFront
-                  ? Transform(
-                      transform: Matrix4.identity()..rotateY(pi),
-                      alignment: Alignment.center,
-                      child: _CardFront(card: card, size: widget.size),
-                    )
-                  : _CardBack(size: widget.size),
-            );
-          },
-        ),
-      ),
+      child: tappable,
     );
   }
 }
@@ -156,12 +178,10 @@ class _CardBack extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Background pattern
           CustomPaint(
             size: Size(size, size * 1.3),
             painter: _CardPatternPainter(),
           ),
-          // Center logo
           Container(
             width: size * 0.44,
             height: size * 0.44,
@@ -254,7 +274,7 @@ class _CardFront extends StatelessWidget {
       ];
     }
 
-    final child = Container(
+    return Container(
       width: size,
       height: size * 1.3,
       decoration: BoxDecoration(
@@ -296,7 +316,5 @@ class _CardFront extends StatelessWidget {
         ],
       ),
     );
-
-    return child;
   }
 }

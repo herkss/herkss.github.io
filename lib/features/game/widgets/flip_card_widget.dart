@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import '../models/card_model.dart';
 import '../../../core/constants/app_colors.dart';
 
@@ -23,27 +22,49 @@ class FlipCardWidget extends StatefulWidget {
 }
 
 class _FlipCardWidgetState extends State<FlipCardWidget>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final AnimationController _flipCtrl;
   late final Animation<double> _flipAnim;
+  late final AnimationController _entryCtrl;
+  late final Animation<double> _entryScale;
+  late final Animation<double> _entryOpacity;
   bool _showFront = false;
 
   @override
   void initState() {
     super.initState();
+
     _flipCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 480),
     );
-    _flipAnim = CurvedAnimation(
-      parent: _flipCtrl,
-      curve: Curves.easeInOutCubic,
-    );
+    _flipAnim = CurvedAnimation(parent: _flipCtrl, curve: Curves.easeInOutCubic);
 
     final isShowing = widget.card.isFlipped || widget.card.isMatched || widget.card.isHinted;
     if (isShowing) {
       _flipCtrl.value = 1.0;
       _showFront = true;
+    }
+
+    // 등장 애니메이션 — 한 번만 실행, rebuild 시 재시작 없음
+    _entryCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 320),
+    );
+    _entryScale = CurvedAnimation(parent: _entryCtrl, curve: Curves.elasticOut);
+    _entryOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _entryCtrl,
+        curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
+      ),
+    );
+
+    if (widget.animationDelay > 0) {
+      Future.delayed(Duration(milliseconds: widget.animationDelay), () {
+        if (mounted) _entryCtrl.forward();
+      });
+    } else {
+      _entryCtrl.forward();
     }
   }
 
@@ -64,6 +85,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
   @override
   void dispose() {
     _flipCtrl.dispose();
+    _entryCtrl.dispose();
     super.dispose();
   }
 
@@ -72,39 +94,41 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     final card = widget.card;
     final canTap = !card.isMatched && !card.isFlipped && widget.onTap != null;
 
-    return GestureDetector(
-      onTap: canTap ? widget.onTap : null,
-      child: AnimatedBuilder(
-        animation: _flipAnim,
-        builder: (context, _) {
-          final angle = _flipAnim.value * pi;
-          final isFront = angle > pi / 2;
-          if (isFront != _showFront) _showFront = isFront;
-
-          return Transform(
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.0015)
-              ..rotateY(angle),
-            alignment: Alignment.center,
-            child: isFront
-                ? Transform(
-                    transform: Matrix4.identity()..rotateY(pi),
-                    alignment: Alignment.center,
-                    child: _CardFront(card: card, size: widget.size),
-                  )
-                : _CardBack(size: widget.size),
-          );
-        },
+    return AnimatedBuilder(
+      animation: _entryCtrl,
+      builder: (context, child) => Opacity(
+        opacity: _entryOpacity.value,
+        child: Transform.scale(
+          scale: _entryScale.value,
+          child: child,
+        ),
       ),
-    )
-        .animate(delay: Duration(milliseconds: widget.animationDelay))
-        .scale(
-          begin: const Offset(0.0, 0.0),
-          end: const Offset(1.0, 1.0),
-          duration: 320.ms,
-          curve: Curves.elasticOut,
-        )
-        .fadeIn(duration: 200.ms);
+      child: GestureDetector(
+        onTap: canTap ? widget.onTap : null,
+        child: AnimatedBuilder(
+          animation: _flipAnim,
+          builder: (context, _) {
+            final angle = _flipAnim.value * pi;
+            final isFront = angle > pi / 2;
+            if (isFront != _showFront) _showFront = isFront;
+
+            return Transform(
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.0015)
+                ..rotateY(angle),
+              alignment: Alignment.center,
+              child: isFront
+                  ? Transform(
+                      transform: Matrix4.identity()..rotateY(pi),
+                      alignment: Alignment.center,
+                      child: _CardFront(card: card, size: widget.size),
+                    )
+                  : _CardBack(size: widget.size),
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 

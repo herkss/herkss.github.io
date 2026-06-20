@@ -246,43 +246,29 @@ class _CardFront extends StatelessWidget {
         border: Border.all(color: borderColor, width: 1.8),
         boxShadow: shadows,
       ),
-      child: Stack(
-        alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (card.isMatched)
-            Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.black.withOpacity(0.15),
+          Text(
+            card.content.display,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: card.content.isEmoji ? size * 0.42 : size * 0.38,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  color: Colors.black.withOpacity(0.4),
+                  blurRadius: 4,
+                  offset: const Offset(1, 2),
                 ),
-              ),
-            ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                card.content.display,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: card.content.isEmoji ? size * 0.42 : size * 0.38,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black.withOpacity(0.4),
-                      blurRadius: 4,
-                      offset: const Offset(1, 2),
-                    ),
-                  ],
-                ),
-              ),
-              if (card.isMatched) ...[
-                const SizedBox(height: 4),
-                const Icon(Icons.check_circle, color: Colors.white, size: 14),
               ],
-            ],
+            ),
           ),
+          if (card.isMatched) ...[
+            const SizedBox(height: 4),
+            const Icon(Icons.check_circle, color: Colors.white, size: 14),
+          ],
         ],
       ),
     );

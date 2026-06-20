@@ -37,14 +37,11 @@ class _GameScreenState extends State<GameScreen> {
             if (mounted && (gp.gameState == GameState.won || gp.gameState == GameState.lost)) {
               Navigator.pushReplacement(
                 context,
-                PageRouteBuilder(
-                  pageBuilder: (_, a, __) => ResultScreen(
+                MaterialPageRoute(
+                  builder: (_) => ResultScreen(
                     level: widget.level,
                     stage: widget.stage,
                   ),
-                  transitionsBuilder: (_, a, __, child) =>
-                      FadeTransition(opacity: a, child: child),
-                  transitionDuration: const Duration(milliseconds: 600),
                 ),
               );
             }

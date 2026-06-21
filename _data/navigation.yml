@@ -12,7 +12,7 @@ main:
     url: /block/
   - title: "🎮 Am Shooter"
     url: /shooter/
-      - title: "🎮 Memory Card"
+  - title: "🎮 Memory Card"
     url: /memory_card/
 
 # 좌측 사이드바 메뉴

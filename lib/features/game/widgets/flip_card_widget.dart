@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import '../models/card_model.dart';
 import '../../../core/constants/app_colors.dart';
@@ -27,7 +26,6 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
   late final Animation<double> _flipAnim;
   late final AnimationController _entryCtrl;
   late final Animation<double> _entryScale;
-  late final Animation<double> _entryOpacity;
   bool _showFront = false;
   bool _entryDone = false;
 
@@ -53,12 +51,6 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     );
     _entryScale = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _entryCtrl, curve: Curves.elasticOut),
-    );
-    _entryOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _entryCtrl,
-        curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
-      ),
     );
 
     _entryCtrl.addStatusListener((status) {
@@ -99,31 +91,24 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
   }
 
   Widget _buildFlipContent(CardModel card) {
-    // If flip is fully complete, skip the 3D transform — no compositing layer
-    if (_flipCtrl.isCompleted) {
-      return _CardFront(card: card, size: widget.size);
-    }
-    if (_flipCtrl.isDismissed) {
-      return _CardBack(size: widget.size);
-    }
-    // During the flip animation, use 3D transform
+    if (_flipCtrl.isCompleted) return _CardFront(card: card, size: widget.size);
+    if (_flipCtrl.isDismissed) return _CardBack(size: widget.size);
+
+    // 2D scale-X flip: no perspective matrix → no compositing layer in CanvasKit
     return AnimatedBuilder(
       animation: _flipAnim,
       builder: (context, _) {
-        final angle = _flipAnim.value * pi;
-        final isFront = angle > pi / 2;
+        final t = _flipAnim.value;
+        final isFront = t > 0.5;
         if (isFront != _showFront) _showFront = isFront;
+        // First half [0→0.5]: scaleX 1→0 (back face narrows)
+        // Second half [0.5→1]: scaleX 0→1 (front face widens)
+        final scaleX = isFront ? (t - 0.5) * 2.0 : 1.0 - t * 2.0;
         return Transform(
-          transform: Matrix4.identity()
-            ..setEntry(3, 2, 0.0015)
-            ..rotateY(angle),
+          transform: Matrix4.diagonal3Values(scaleX, 1.0, 1.0),
           alignment: Alignment.center,
           child: isFront
-              ? Transform(
-                  transform: Matrix4.identity()..rotateY(pi),
-                  alignment: Alignment.center,
-                  child: _CardFront(card: card, size: widget.size),
-                )
+              ? _CardFront(card: card, size: widget.size)
               : _CardBack(size: widget.size),
         );
       },
@@ -140,15 +125,13 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
       child: flipContent,
     );
 
-    // Once entry animation is done, skip the Opacity/Scale wrapper
     if (_entryDone) return tappable;
 
+    // Scale-only entry (no Opacity widget → no compositing layer in CanvasKit)
     return AnimatedBuilder(
       animation: _entryCtrl,
-      builder: (context, child) => Opacity(
-        opacity: _entryOpacity.value,
-        child: Transform.scale(scale: _entryScale.value, child: child),
-      ),
+      builder: (context, child) =>
+          Transform.scale(scale: _entryScale.value, child: child),
       child: tappable,
     );
   }

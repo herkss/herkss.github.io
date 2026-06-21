@@ -8,6 +8,14 @@ import 'features/home/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Make Flutter render errors bright red so they're distinguishable from gray overlays
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return Container(
+      color: const Color(0xFFFF0000),
+      alignment: Alignment.center,
+      child: const Text('ERROR', style: TextStyle(color: Colors.white, fontSize: 18)),
+    );
+  };
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,

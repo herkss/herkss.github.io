@@ -194,18 +194,18 @@ class _ComboBlockState extends State<_ComboBlock>
       children: [
         Text('콤보',
             style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+        // Use color alpha instead of Opacity widget — avoids compositing layer in CanvasKit
         AnimatedBuilder(
           animation: _ctrl,
-          builder: (_, child) => Opacity(
-            opacity: _opacity.value,
-            child: Transform.scale(scale: _scale.value, child: child),
-          ),
-          child: Text(
-            '×${widget.combo}',
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w900,
-              color: AppColors.accent,
+          builder: (context, _) => Transform.scale(
+            scale: _scale.value,
+            child: Text(
+              '×${widget.combo}',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w900,
+                color: AppColors.accent.withValues(alpha: _opacity.value),
+              ),
             ),
           ),
         ),

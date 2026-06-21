@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
 import '../widgets/flip_card_widget.dart';
 import '../widgets/game_hud_widget.dart';
+import '../widgets/celebration_overlay.dart';
 import '../models/card_model.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/level_data.dart';
@@ -36,24 +37,40 @@ class _GameScreenState extends State<GameScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => ResultScreen(
-          level: widget.level,
-          stage: widget.stage,
-        ),
+        builder: (_) => ResultScreen(level: widget.level, stage: widget.stage),
       ),
     );
+  }
+
+  void _goToNext() {
+    if (_navigating || !mounted) return;
+    _navigating = true;
+    final nextStage = widget.stage < 10 ? widget.stage + 1 : null;
+    final nextLevel = widget.stage >= 10 && widget.level < 10 ? widget.level + 1 : null;
+
+    if (nextStage != null || nextLevel != null) {
+      final nl = nextStage != null ? widget.level : nextLevel!;
+      final ns = nextStage ?? 1;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => GameScreen(level: nl, stage: ns)),
+      );
+    } else {
+      Navigator.popUntil(context, (r) => r.isFirst);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<GameProvider>(
       builder: (context, gp, _) {
-        if (gp.gameState == GameState.won || gp.gameState == GameState.lost) {
+        // 패배 시 결과 화면으로 이동
+        if (gp.gameState == GameState.lost) {
           WidgetsBinding.instance.addPostFrameCallback((_) => _goToResult(context));
         }
 
         final config = gp.levelConfig;
-        return Scaffold(
+        final gameBody = Scaffold(
           body: Container(
             decoration: const BoxDecoration(gradient: AppColors.backgroundGradient),
             child: SafeArea(
@@ -61,9 +78,9 @@ class _GameScreenState extends State<GameScreen> {
                 children: [
                   _TopBar(level: widget.level, stage: widget.stage),
                   const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: const GameHudWidget(),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: GameHudWidget(),
                   ),
                   const SizedBox(height: 10),
                   Expanded(
@@ -84,6 +101,23 @@ class _GameScreenState extends State<GameScreen> {
             ),
           ),
         );
+
+        // 승리 시 셀러브레이션 오버레이
+        if (gp.gameState == GameState.won) {
+          return Stack(
+            children: [
+              gameBody,
+              CelebrationOverlay(
+                level: widget.level,
+                stage: widget.stage,
+                gp: gp,
+                onNext: _goToNext,
+              ),
+            ],
+          );
+        }
+
+        return gameBody;
       },
     );
   }

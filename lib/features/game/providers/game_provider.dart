@@ -211,6 +211,7 @@ class GameProvider extends ChangeNotifier {
         _timer?.cancel();
         return;
       }
+      if (_isEvaluating) return; // 카드 평가 중에는 타이머 정지 (마지막 매칭 버그 방지)
       _timeRemaining--;
       if (_timeRemaining <= 0) {
         _timeRemaining = 0;

@@ -299,25 +299,37 @@ class _PlayerPanel extends StatelessWidget {
     required this.gradient, required this.alignRight,
   });
 
+  // 활성 플레이어: 주황색 배경
+  static const _activeGradient = LinearGradient(
+    colors: [Color(0xFFFF6B00), Color(0xFFFF9500)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 350),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      duration: const Duration(milliseconds: 300),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: AppColors.surface,
+        gradient: isActive ? _activeGradient : null,
+        color: isActive ? null : AppColors.surface,
         border: Border.all(
           color: isActive
-              ? (gradient == AppColors.primaryGradient ? AppColors.primary : AppColors.gold)
+              ? const Color(0xFFFFB300)
               : AppColors.primary.withValues(alpha: 0.15),
-          width: isActive ? 2 : 1,
+          width: isActive ? 2.5 : 1,
         ),
-        boxShadow: isActive ? [BoxShadow(
-          color: (gradient == AppColors.primaryGradient ? AppColors.primary : AppColors.gold)
-              .withValues(alpha: 0.3),
-          blurRadius: 14,
-        )] : [],
+        boxShadow: isActive
+            ? [
+                BoxShadow(
+                  color: const Color(0xFFFF6B00).withValues(alpha: 0.55),
+                  blurRadius: 20,
+                  spreadRadius: 2,
+                ),
+              ]
+            : [],
       ),
       child: Column(
         crossAxisAlignment: alignRight ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -325,24 +337,41 @@ class _PlayerPanel extends StatelessWidget {
           Row(
             mainAxisAlignment: alignRight ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
-              if (!alignRight && isActive) ...[_Dot(gradient: gradient), const SizedBox(width: 5)],
-              Text(label, style: TextStyle(
-                fontSize: 11, fontWeight: FontWeight.w900,
-                color: isMe ? Colors.white : AppColors.textSecondary,
-                letterSpacing: 0.5,
-              )),
-              if (alignRight && isActive) ...[const SizedBox(width: 5), _Dot(gradient: gradient)],
+              if (!alignRight && isActive) ...[_Dot(gradient: gradient), const SizedBox(width: 6)],
+              AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 200),
+                style: TextStyle(
+                  fontSize: isActive ? 17 : 11,
+                  fontWeight: FontWeight.w900,
+                  color: isActive ? Colors.white : AppColors.textSecondary,
+                  letterSpacing: isActive ? 1.0 : 0.5,
+                ),
+                child: Text(label),
+              ),
+              if (alignRight && isActive) ...[const SizedBox(width: 6), _Dot(gradient: gradient)],
             ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 5),
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
-            child: Text('$score', key: ValueKey(score), style: TextStyle(
-              fontSize: 22, fontWeight: FontWeight.w900,
-              color: isActive ? Colors.white : AppColors.textSecondary,
-            )),
+            child: Text(
+              '$score',
+              key: ValueKey(score),
+              style: TextStyle(
+                fontSize: isActive ? 28 : 20,
+                fontWeight: FontWeight.w900,
+                color: isActive ? Colors.white : AppColors.textSecondary,
+              ),
+            ),
           ),
-          Text('$pairs쌍', style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+          Text(
+            '$pairs쌍',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: isActive ? Colors.white70 : AppColors.textSecondary,
+            ),
+          ),
         ],
       ),
     );

@@ -26,6 +26,8 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
   late final Animation<double> _flipAnim;
   late final AnimationController _entryCtrl;
   late final Animation<double> _entryScale;
+  late final AnimationController _matchCtrl;
+  late final Animation<double> _matchBounce;
   bool _showFront = false;
   bool _entryDone = false;
 
@@ -35,9 +37,9 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
 
     _flipCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 480),
+      duration: const Duration(milliseconds: 220), // 빠른 플립
     );
-    _flipAnim = CurvedAnimation(parent: _flipCtrl, curve: Curves.easeInOutCubic);
+    _flipAnim = CurvedAnimation(parent: _flipCtrl, curve: Curves.easeInOut);
 
     final isShowing = widget.card.isFlipped || widget.card.isMatched || widget.card.isHinted;
     if (isShowing) {
@@ -47,17 +49,27 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
 
     _entryCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 320),
+      duration: const Duration(milliseconds: 280),
     );
     _entryScale = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _entryCtrl, curve: Curves.elasticOut),
     );
-
     _entryCtrl.addStatusListener((status) {
       if (status == AnimationStatus.completed && mounted) {
         setState(() => _entryDone = true);
       }
     });
+
+    _matchCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 380),
+    );
+    // 1.0 → 1.28 → 0.92 → 1.0 bounce
+    _matchBounce = TweenSequence<double>([
+      TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.28), weight: 35),
+      TweenSequenceItem(tween: Tween(begin: 1.28, end: 0.92), weight: 30),
+      TweenSequenceItem(tween: Tween(begin: 0.92, end: 1.0), weight: 35),
+    ]).animate(CurvedAnimation(parent: _matchCtrl, curve: Curves.easeInOut));
 
     if (widget.animationDelay > 0) {
       Future.delayed(Duration(milliseconds: widget.animationDelay), () {
@@ -81,12 +93,18 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     } else if (!isShowing && wasShowing) {
       _flipCtrl.reverse();
     }
+
+    // 카드 매칭 시 바운스 애니메이션
+    if (widget.card.isMatched && !oldWidget.card.isMatched) {
+      _matchCtrl.forward(from: 0);
+    }
   }
 
   @override
   void dispose() {
     _flipCtrl.dispose();
     _entryCtrl.dispose();
+    _matchCtrl.dispose();
     super.dispose();
   }
 
@@ -94,15 +112,13 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     if (_flipCtrl.isCompleted) return _CardFront(card: card, size: widget.size);
     if (_flipCtrl.isDismissed) return _CardBack(size: widget.size);
 
-    // 2D scale-X flip: no perspective matrix → no compositing layer in CanvasKit
+    // 2D scale-X 플립 — 투시 행렬 없이 어핀 변환 (saveLayer 없음)
     return AnimatedBuilder(
       animation: _flipAnim,
       builder: (context, _) {
         final t = _flipAnim.value;
         final isFront = t > 0.5;
         if (isFront != _showFront) _showFront = isFront;
-        // First half [0→0.5]: scaleX 1→0 (back face narrows)
-        // Second half [0.5→1]: scaleX 0→1 (front face widens)
         final scaleX = isFront ? (t - 0.5) * 2.0 : 1.0 - t * 2.0;
         return Transform(
           transform: Matrix4.diagonal3Values(scaleX, 1.0, 1.0),
@@ -125,14 +141,20 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
       child: flipContent,
     );
 
-    if (_entryDone) return tappable;
+    // 매칭 바운스 (항상 포함 — value=0 일 때 scale=1.0 이므로 시각적 변화 없음)
+    final bounced = AnimatedBuilder(
+      animation: _matchCtrl,
+      builder: (_, child) => Transform.scale(scale: _matchBounce.value, child: child),
+      child: tappable,
+    );
 
-    // Scale-only entry (no Opacity widget → no compositing layer in CanvasKit)
+    if (_entryDone) return bounced;
+
+    // 진입 스케일 애니메이션 (Opacity 없음 → saveLayer 없음)
     return AnimatedBuilder(
       animation: _entryCtrl,
-      builder: (context, child) =>
-          Transform.scale(scale: _entryScale.value, child: child),
-      child: tappable,
+      builder: (_, child) => Transform.scale(scale: _entryScale.value, child: child),
+      child: bounced,
     );
   }
 }
@@ -149,10 +171,10 @@ class _CardBack extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: AppColors.cardBackGradient,
-        border: Border.all(color: AppColors.primary.withOpacity(0.5), width: 1.5),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.5), width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -173,7 +195,7 @@ class _CardBack extends StatelessWidget {
               gradient: AppColors.primaryGradient,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.6),
+                  color: AppColors.primary.withValues(alpha: 0.6),
                   blurRadius: 12,
                   spreadRadius: 2,
                 ),
@@ -200,7 +222,7 @@ class _CardPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppColors.primary.withOpacity(0.08)
+      ..color = AppColors.primary.withValues(alpha: 0.08)
       ..strokeWidth = 1;
 
     const spacing = 12.0;
@@ -227,10 +249,10 @@ class _CardFront extends StatelessWidget {
     final idx = card.content.gradientIndex % gradients.length;
     final grad = gradients[idx];
 
-    Color borderColor = Colors.white.withOpacity(0.2);
+    Color borderColor = Colors.white.withValues(alpha: 0.2);
     List<BoxShadow> shadows = [
       BoxShadow(
-        color: grad[0].withOpacity(0.4),
+        color: grad[0].withValues(alpha: 0.4),
         blurRadius: 10,
         offset: const Offset(0, 4),
       ),
@@ -240,9 +262,9 @@ class _CardFront extends StatelessWidget {
       borderColor = AppColors.cardMatched;
       shadows = [
         BoxShadow(
-          color: AppColors.cardMatched.withOpacity(0.6),
-          blurRadius: 16,
-          spreadRadius: 2,
+          color: AppColors.cardMatched.withValues(alpha: 0.7),
+          blurRadius: 18,
+          spreadRadius: 3,
           offset: const Offset(0, 0),
         ),
       ];
@@ -250,7 +272,7 @@ class _CardFront extends StatelessWidget {
       borderColor = AppColors.gold;
       shadows = [
         BoxShadow(
-          color: AppColors.gold.withOpacity(0.7),
+          color: AppColors.gold.withValues(alpha: 0.7),
           blurRadius: 18,
           spreadRadius: 3,
         ),
@@ -285,7 +307,7 @@ class _CardFront extends StatelessWidget {
               color: Colors.white,
               shadows: [
                 Shadow(
-                  color: Colors.black.withOpacity(0.4),
+                  color: Colors.black.withValues(alpha: 0.4),
                   blurRadius: 4,
                   offset: const Offset(1, 2),
                 ),

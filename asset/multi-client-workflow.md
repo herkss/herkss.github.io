@@ -398,7 +398,258 @@ wrangler whoami
 
 ---
 
-## 12. 요약
+## 12. 작업 화면 좌우 분할 + 코드 타이핑 화면
+
+왼쪽에는 **Claude Code**, 오른쪽에는 Claude가 수정한 코드가 **한 글자씩 타이핑되듯** 표시되는 작업 화면입니다. 고객 미팅·시연 중에 작업 과정을 보여주기 좋습니다.
+
+```
+┌──────────────────────────────┬─────────────────────────────┐
+│ Claude Code                  │ ▸ src/index.html  +12 -3     │
+│                              │  14 │ <section class="hero"> │
+│ > 메인 배너를 시안대로 바꿔줘 │  15 │   <h1>안녕하세요</h1>▌  │
+│                              │                             │
+└──────────────────────────────┴─────────────────────────────┘
+```
+
+### 12-1. 토큰(사용량) 추가 차감 여부
+
+**추가 차감 없음.** 오른쪽 화면은 PC에서만 동작하는 작은 파이썬 프로그램으로, 파일 변경을 읽어 화면에 그리기만 합니다. Claude·인터넷과 연결되지 않으며, 사용량은 기존처럼 왼쪽 Claude Code 대화만 계산됩니다.
+
+### 12-2. 보안 처리
+
+- `.envrc`, `.env*`, `*.key`, `*.pem`, `*.jks` 등 **토큰·키 파일은 변경되어도 화면에 표시하지 않음**
+- `.git`, `node_modules`, `dist`, `build`, `.claude` 폴더와 `*.log`, `*.lock`, `*.map` 파일은 감시 제외
+- 시연 중 고객 비밀정보가 화면에 노출될 위험을 줄임
+
+### 12-3. 설치 (최초 1회)
+
+필요 도구: `tmux`, `python3`, `pygments` (문법 색상)
+
+```bash
+sudo apt install -y tmux python3-pygments
+mkdir -p ~/bin
+# 아래 두 파일을 ~/bin/codetype.py, ~/bin/work 로 저장
+chmod +x ~/bin/codetype.py ~/bin/work
+source ~/.profile     # ~/bin 을 PATH에 반영 (재로그인 후에는 자동)
+```
+
+### 12-4. 실행
+
+```bash
+work ~/clients/a-company        # 폴더 지정
+cd ~/clients/b-company && work  # 현재 폴더
+```
+
+- 왼쪽: Claude Code 자동 실행 → 평소처럼 지시
+- 오른쪽: 파일이 바뀔 때마다 변경된 줄을 색상과 함께 타이핑 효과로 표시
+- 고객마다 별도 tmux 세션(폴더 이름)으로 열리므로 5개 고객을 동시에 띄워도 섞이지 않음
+
+| 동작 | 방법 |
+|------|------|
+| 좌우 창 이동 | 마우스 클릭 |
+| 잠시 나가기 (작업 유지) | `Ctrl+b` → `d` |
+| 다시 들어가기 | 같은 폴더로 `work` 재실행 |
+| 실행 중인 세션 목록 | `tmux ls` |
+| 완전 종료 | 왼쪽 Claude 종료 + 오른쪽 `Ctrl+c` |
+
+**타이핑 속도 조절**: `~/bin/work` 안의 `codetype.py` 실행 부분에 `--speed 0.03` (느리게) / `--speed 0.005` (빠르게) 추가. 기본값 `0.012`.
+
+### 12-5. 스크립트 ① `~/bin/work` (좌우 분할 실행기)
+
+```bash
+#!/usr/bin/env bash
+# 사용법: work [폴더]   — 왼쪽: Claude Code / 오른쪽: 코드 타이핑 화면
+DIR="$(cd "${1:-.}" && pwd)" || exit 1
+NAME="$(basename "$DIR" | tr -c 'a-zA-Z0-9_-' '_')"
+
+if tmux has-session -t "$NAME" 2>/dev/null; then
+  exec tmux attach -t "$NAME"
+fi
+
+tmux new-session -d -s "$NAME" -c "$DIR" -x "$(tput cols)" -y "$(tput lines)"
+tmux set -t "$NAME" mouse on
+tmux split-window -h -t "$NAME" -c "$DIR" -l 45% "python3 $HOME/bin/codetype.py '$DIR'; read"
+tmux select-pane -t "$NAME".0
+tmux send-keys -t "$NAME".0 "claude" Enter
+exec tmux attach -t "$NAME"
+```
+
+### 12-6. 스크립트 ② `~/bin/codetype.py` (타이핑 표시기)
+
+```python
+#!/usr/bin/env python3
+"""현재 폴더의 파일 변경을 감시해서, 새로 추가된 코드를 타이핑 효과로 보여준다.
+
+사용법: codetype.py [폴더] [--speed 초/글자]
+"""
+import argparse
+import difflib
+import os
+import random
+import sys
+import time
+from collections import deque
+
+from pygments.formatters import Terminal256Formatter
+from pygments.lexers import TextLexer, guess_lexer_for_filename
+from pygments.util import ClassNotFound
+
+SKIP_DIRS = {".git", "node_modules", "dist", "build", ".next", ".astro",
+             ".cache", "__pycache__", ".venv", "venv", ".claude"}
+# 토큰·키가 들어있을 수 있는 파일은 화면에 절대 표시하지 않음
+SECRET_NAMES = {".envrc", ".env", ".npmrc", ".netrc", "id_rsa", "id_ed25519"}
+SECRET_EXTS = {".pem", ".key", ".p12", ".jks", ".keystore"}
+SKIP_EXTS = {".log", ".lock", ".map", ".min.js"}
+MAX_SIZE = 300_000
+
+DIM, RESET, BOLD = "\033[2m", "\033[0m", "\033[1m"
+CYAN, GREEN, RED = "\033[36m", "\033[32m", "\033[31m"
+
+formatter = Terminal256Formatter(style="monokai")
+
+
+def is_secret(name):
+    return (name in SECRET_NAMES or name.startswith(".env.")
+            or os.path.splitext(name)[1] in SECRET_EXTS)
+
+
+def scan(root):
+    files = {}
+    for d, dirs, names in os.walk(root):
+        dirs[:] = [x for x in dirs if x not in SKIP_DIRS]
+        for n in names:
+            if is_secret(n) or n.endswith(tuple(SKIP_EXTS)):
+                continue
+            p = os.path.join(d, n)
+            try:
+                st = os.stat(p)
+            except OSError:
+                continue
+            if st.st_size <= MAX_SIZE:
+                files[p] = st.st_mtime
+    return files
+
+
+def read_text(path):
+    try:
+        with open(path, "rb") as f:
+            data = f.read()
+    except OSError:
+        return None
+    if b"\0" in data:
+        return None
+    return data.decode("utf-8", errors="replace").splitlines()
+
+
+def color_for(ttype):
+    while ttype is not None:
+        s = formatter.style_string.get(str(ttype))
+        if s:
+            return s[0]
+        ttype = ttype.parent
+    return ""
+
+
+def typewrite(text, delay):
+    for ch in text:
+        sys.stdout.write(ch)
+        sys.stdout.flush()
+        if ch.strip():
+            time.sleep(delay * random.uniform(0.4, 1.6))
+
+
+def type_block(path, lines, start_no, delay):
+    try:
+        lexer = guess_lexer_for_filename(path, "\n".join(lines))
+    except ClassNotFound:
+        lexer = TextLexer()
+    width = len(str(start_no + len(lines)))
+    line_no = start_no
+    sys.stdout.write(f"{DIM}{str(line_no).rjust(width)} │ {RESET}")
+    for ttype, value in lexer.get_tokens("\n".join(lines) + "\n"):
+        col = color_for(ttype)
+        parts = value.split("\n")
+        for i, part in enumerate(parts):
+            if i > 0:
+                sys.stdout.write(RESET + "\n")
+                line_no += 1
+                if line_no >= start_no + len(lines):
+                    break
+                sys.stdout.write(f"{DIM}{str(line_no).rjust(width)} │ {RESET}")
+                time.sleep(delay * 6)
+            sys.stdout.write(col)
+            typewrite(part, delay)
+            sys.stdout.write(RESET)
+
+
+def header(path, root, added, removed):
+    rel = os.path.relpath(path, root)
+    stamp = time.strftime("%H:%M:%S")
+    bar = "─" * max(4, 50 - len(rel))
+    print(f"\n{CYAN}{BOLD}▸ {rel}{RESET} {DIM}{bar} {stamp}{RESET}  "
+          f"{GREEN}+{added}{RESET} {RED}-{removed}{RESET}")
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("root", nargs="?", default=".")
+    ap.add_argument("--speed", type=float, default=0.012, help="글자당 지연(초)")
+    args = ap.parse_args()
+    root = os.path.abspath(args.root)
+
+    mtimes = scan(root)
+    contents = {p: read_text(p) for p in mtimes}
+    queue = deque()
+
+    os.system("clear")
+    print(f"{GREEN}{BOLD}● codetype{RESET} {DIM}감시 중: {root}{RESET}")
+    print(f"{DIM}  Claude가 코드를 수정하면 여기에 실시간으로 입력됩니다...{RESET}")
+
+    while True:
+        now = scan(root)
+        for p, m in now.items():
+            if mtimes.get(p) == m:
+                continue
+            new = read_text(p)
+            old = contents.get(p) or []
+            contents[p] = new
+            if new is None:
+                continue
+            sm = difflib.SequenceMatcher(None, old, new, autojunk=False)
+            removed = sum(i2 - i1 for op, i1, i2, _, _ in sm.get_opcodes()
+                          if op in ("replace", "delete"))
+            hunks = [(j1, new[j1:j2]) for op, _, _, j1, j2 in sm.get_opcodes()
+                     if op in ("replace", "insert")]
+            if hunks or removed:
+                queue.append((p, hunks, removed))
+        mtimes = now
+
+        if queue:
+            p, hunks, removed = queue.popleft()
+            added = sum(len(h) for _, h in hunks)
+            header(p, root, added, removed)
+            # 밀린 변경이 많으면 빠르게 타이핑
+            delay = args.speed / (1 + len(queue)) if added < 400 else args.speed / 8
+            for j, (start, lines) in enumerate(hunks):
+                if j:
+                    print(f"{DIM}    ⋮{RESET}")
+                type_block(p, lines, start + 1, delay)
+            if not hunks:
+                print(f"{DIM}  (삭제만 있음){RESET}")
+        else:
+            time.sleep(0.5)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print(RESET)
+```
+
+---
+
+## 13. 요약
 
 ```
 ✔ 비밀번호 대신 → 초대 + 최소 권한 토큰
@@ -407,6 +658,7 @@ wrangler whoami
 ✔ .claude/settings.json → 토큰 읽기·직접 배포 차단, push는 승인
 ✔ GitHub Actions        → push만 하면 빌드·배포 자동, 미리보기 URL로 고객 확인
 ✔ 종료 시 토큰 폐기     → 책임 범위 깔끔하게 종료
+✔ work 명령            → 좌: Claude / 우: 코드 타이핑 화면 (추가 비용 없음)
 ```
 
 *작성: 허갱소프트 · 2026-11-25*
